@@ -1,6 +1,12 @@
 import DataTable from "../../../components/DataTable";
 
-const ItemsData = ({ itemDatas, loading, hasFetched }) => {
+const ItemsData = ({
+  itemDatas,
+  pagination,
+  setPagination,
+  loading,
+  isFetched,
+}) => {
   const columns = [
     {
       align: "center",
@@ -59,7 +65,9 @@ const ItemsData = ({ itemDatas, loading, hasFetched }) => {
     <DataTable
       columns={columns}
       datas={itemDatas}
-      loading={loading || !hasFetched}
+      loading={loading || !isFetched}
+      pagination={pagination}
+      setPagination={setPagination}
     />
   );
 };

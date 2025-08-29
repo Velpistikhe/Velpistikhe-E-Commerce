@@ -1,53 +1,55 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../api/axios";
 import useNotification from "./useNotification";
+import { handleApiError } from "../utils/error";
 
-const useGets = ({ endpoint, responseKey }) => {
-  const [data, setData] = useState([]);
+const useGets = ({ endpoint, initialParams = {}, config = {} }) => {
+  const [params, setParams] = useState(initialParams);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
   const { notify } = useNotification();
 
   const fetchData = useCallback(
     async (signal) => {
       setLoading(true);
-
       try {
-        const { data } = await api.get(endpoint, {
+        const response = await api.get(endpoint, {
           signal,
           withCredentials: true,
+          params,
         });
-
-        setData(data?.[responseKey] || []);
-        setHasFetched(true);
+        setData(response?.data || []);
+        setIsFetched(true);
       } catch (error) {
-        if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-          return;
-        }
-        notify({
-          type: "error",
-          title: endpoint,
-          message:
-            error?.response?.data?.message ||
-            error?.message ||
-            "Internal Server Error",
-        });
-        setHasFetched(true);
+        handleApiError(error, notify, endpoint);
+        setIsFetched(true);
       } finally {
         setLoading(false);
       }
     },
-    [endpoint, notify, responseKey]
+    [endpoint, notify, params]
   );
 
   useEffect(() => {
+    if (!endpoint) return;
+
     const controller = new AbortController();
     fetchData(controller.signal);
-
     return () => controller.abort();
-  }, [fetchData]);
+  }, [fetchData, endpoint]);
 
-  return { data, loading, hasFetched, refetch: fetchData };
+  return useMemo(
+    () => ({
+      data,
+      loading,
+      isFetched,
+      refetch: fetchData,
+      params,
+      setParams,
+    }),
+    [data, loading, isFetched, fetchData, params]
+  );
 };
 
 export default useGets;

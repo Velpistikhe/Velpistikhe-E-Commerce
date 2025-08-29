@@ -8,12 +8,13 @@ import useGets from "../../../hooks/useGets";
 const Items = () => {
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [name, setName] = useState(null);
-  const {
-    data: itemDatas,
-    loading,
-    hasFetched,
-    refetch,
-  } = useGets({ endpoint: "items", responseKey: "items" });
+  const { data, loading, isFetched, refetch, setParams } = useGets({
+    endpoint: "items",
+    initialParams: {
+      page: 1,
+      limit: 10,
+    },
+  });
 
   return (
     <>
@@ -24,9 +25,11 @@ const Items = () => {
         </Space>
       </Flex>
       <ItemsData
-        itemDatas={itemDatas}
+        itemDatas={data?.items}
+        pagination={data?.pagination}
+        setPagination={setParams}
         loading={loading}
-        hasFetched={hasFetched}
+        isFetched={isFetched}
       />
       {openModalAdd && (
         <ItemsModal
