@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import api from "../api/axios";
 
 const useGets = ({ name }) => {
-  const [datas, setDatas] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchDatas = useCallback(
@@ -15,7 +15,7 @@ const useGets = ({ name }) => {
           withCredentials: true,
         });
 
-        setDatas(data[name]);
+        setData(data?.[name] || []);
       } catch (error) {
         console.log(error);
       } finally {
@@ -25,9 +25,14 @@ const useGets = ({ name }) => {
     [name]
   );
 
-  useEffect(() => fetchDatas, [fetchDatas]);
+  useEffect(() => {
+    const contoller = new AbortController();
+    fetchDatas(contoller.signal);
 
-  return { datas, loading, refetch: fetchDatas };
+    return () => contoller.abort();
+  }, [fetchDatas]);
+
+  return { data, loading, refetch: fetchDatas };
 };
 
 export default useGets;
