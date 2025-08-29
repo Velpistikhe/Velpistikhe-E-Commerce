@@ -1,8 +1,8 @@
 import useGets from "../../../hooks/useGets";
 
 const ItemsData = () => {
-  const { datas, loading, refetch } = useGets({ name: "items" });
-  console.log(datas);
+  const { data, loading, refetch } = useGets({ name: "items" });
+  console.log(data);
 
   return <div>ItemsData</div>;
 };
