@@ -9,6 +9,7 @@ const InputAngka = ({ id, value, onChange }) => {
     "Tab",
     "Home",
     "End",
+    "Enter",
   ];
   const handleKeyDown = (e) => {
     if (

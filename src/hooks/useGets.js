@@ -27,8 +27,12 @@ const useGets = ({ endpoint, responseKey }) => {
         notify({
           type: "error",
           title: endpoint,
-          message: error?.message || "Internal Server Error",
+          message:
+            error?.response?.data?.message ||
+            error?.message ||
+            "Internal Server Error",
         });
+        setHasFetched(true);
       } finally {
         setLoading(false);
       }

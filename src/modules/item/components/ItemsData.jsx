@@ -1,12 +1,6 @@
 import DataTable from "../../../components/DataTable";
-import useGets from "../../../hooks/useGets";
 
-const ItemsData = () => {
-  const {
-    data: itemDatas,
-    loading,
-    hasFetched,
-  } = useGets({ endpoint: "items", responseKey: "items" });
+const ItemsData = ({ itemDatas, loading, hasFetched }) => {
   const columns = [
     {
       align: "center",
