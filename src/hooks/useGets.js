@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import api from "../api/axios";
 
-const useGets = (url) => {
+const useGets = ({ name }) => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -10,19 +10,19 @@ const useGets = (url) => {
       setLoading(true);
 
       try {
-        const { data } = await api.get(url, {
+        const { data } = await api.get(name, {
           signal,
           withCredentials: true,
         });
 
-        setDatas(data[url]);
+        setDatas(data[name]);
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
       }
     },
-    [url]
+    [name]
   );
 
   useEffect(() => fetchDatas, [fetchDatas]);
