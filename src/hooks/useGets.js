@@ -2,46 +2,48 @@ import { useCallback, useEffect, useState } from "react";
 import api from "../api/axios";
 import useNotification from "./useNotification";
 
-const useGets = ({ name }) => {
+const useGets = ({ endpoint, responseKey }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
   const { notify } = useNotification();
 
-  const fetchDatas = useCallback(
+  const fetchData = useCallback(
     async (signal) => {
       setLoading(true);
 
       try {
-        const { data } = await api.get(name, {
+        const { data } = await api.get(endpoint, {
           signal,
           withCredentials: true,
         });
 
-        setData(data?.[name] || []);
+        setData(data?.[responseKey] || []);
+        setHasFetched(true);
       } catch (error) {
         if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
           return;
         }
         notify({
           type: "error",
-          title: name,
+          title: endpoint,
           message: error?.message || "Internal Server Error",
         });
       } finally {
         setLoading(false);
       }
     },
-    [name, notify]
+    [endpoint, notify, responseKey]
   );
 
   useEffect(() => {
     const controller = new AbortController();
-    fetchDatas(controller.signal);
+    fetchData(controller.signal);
 
     return () => controller.abort();
-  }, [fetchDatas]);
+  }, [fetchData]);
 
-  return { data, loading, refetch: fetchDatas };
+  return { data, loading, hasFetched, refetch: fetchData };
 };
 
 export default useGets;
