@@ -26,8 +26,8 @@ const Items = () => {
       </Flex>
       <ItemsData
         itemDatas={data?.items}
-        pagination={data?.pagination}
-        setPagination={setParams}
+        params={data?.pagination}
+        setParams={setParams}
         loading={loading}
         isFetched={isFetched}
       />

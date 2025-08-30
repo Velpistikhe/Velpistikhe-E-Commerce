@@ -1,12 +1,6 @@
 import DataTable from "../../../components/DataTable";
 
-const ItemsData = ({
-  itemDatas,
-  pagination,
-  setPagination,
-  loading,
-  isFetched,
-}) => {
+const ItemsData = ({ itemDatas, params, setParams, loading, isFetched }) => {
   const columns = [
     {
       align: "center",
@@ -66,8 +60,9 @@ const ItemsData = ({
       columns={columns}
       datas={itemDatas}
       loading={loading || !isFetched}
-      pagination={pagination}
-      setPagination={setPagination}
+      params={params}
+      setParams={setParams}
+      size={"small"}
     />
   );
 };
