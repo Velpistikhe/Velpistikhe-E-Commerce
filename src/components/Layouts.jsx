@@ -5,11 +5,12 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
+import { Button, Flex, Layout, Menu, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useCallback, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router";
+import logo from "../logo.png";
 
 const Layouts = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -56,6 +57,25 @@ const Layouts = ({ children }) => {
         width={300}
         style={{ background: colorBgContainer }}
       >
+        <Header
+          style={{
+            padding: 0,
+            background: colorBgContainer,
+          }}
+        >
+          <Flex style={{ height: "100%" }} align="center">
+            <img
+              style={{
+                height: "100%",
+                borderRadius: "100%",
+                padding: 10,
+              }}
+              src={logo}
+              alt="logo"
+            />
+            <h1 style={{ display: "inline-block" }}>Velpistikhe</h1>
+          </Flex>
+        </Header>
         <Menu
           mode="inline"
           selectedKeys={selectedKey}
