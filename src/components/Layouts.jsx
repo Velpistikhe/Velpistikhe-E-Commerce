@@ -1,7 +1,9 @@
 import {
+  FolderOpenOutlined,
   HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  SendOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -9,10 +11,10 @@ import { Button, Flex, Layout, Menu, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useCallback, useMemo, useState } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import logo from "../logo.png";
 
-const Layouts = ({ children }) => {
+const Layouts = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -21,11 +23,23 @@ const Layouts = ({ children }) => {
     { key: "1", icon: <HomeOutlined />, label: <Link to="/">Home</Link> },
     {
       key: "2",
+      icon: <FolderOpenOutlined />,
+      label: "Modules",
+      children: [
+        {
+          key: "2-1",
+          icon: <SendOutlined />,
+          label: <Link to="/item">Item</Link>,
+        },
+      ],
+    },
+    {
+      key: "3",
       icon: <SettingOutlined />,
       label: "Setting",
       children: [
         {
-          key: "2-1",
+          key: "3-1",
           icon: <UserOutlined />,
           label: <Link to="/user">User</Link>,
         },
@@ -101,7 +115,7 @@ const Layouts = ({ children }) => {
             borderRadius: borderRadiusLG,
           }}
         >
-          {children}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
