@@ -27,14 +27,15 @@ const AppRoutes = () => {
       <Route element={<AuthRoute />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route element={<Layouts />}>
           <Route index element={<Dashboard />} />
           <Route path="/item" element={<Items />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Route>
-      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

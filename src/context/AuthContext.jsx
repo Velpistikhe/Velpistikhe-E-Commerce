@@ -1,7 +1,14 @@
-import { createContext, useCallback, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import api from "../api/axios";
 import { useNotification } from "./NotificationContext";
 import { handleApiError } from "../utils/error";
+import Loading from "../components/Loading";
 
 export const AuthContext = createContext({
   user: null,
@@ -12,52 +19,62 @@ export const AuthContext = createContext({
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [isFetched, setIsFetched] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { notify } = useNotification();
 
-  const fetchProfile = useCallback(async () => {
-    setLoading(true);
+  const fetchProfile = useCallback(
+    async (signal) => {
+      setLoading(true);
 
-    try {
-      setUser(false);
-      setIsFetched(true);
-    } catch (err) {
-      handleApiError(err, notify, "profile");
-      setIsFetched(true);
-    } finally {
-      setLoading(false);
-    }
-  }, [notify]);
+      try {
+        const { data } = await api.post("user/profile", {
+          signal,
+        });
 
-  const login = async (values) => {
-    setLoading(true);
+        setUser(data?.user || null);
+        setLoading(false);
+      } catch (err) {
+        handleApiError(err, notify, "profile");
+        setLoading(false);
+      }
+    },
+    [notify]
+  );
 
-    try {
-      const data = await api.post("user/login", values);
+  const login = useCallback(
+    async (values) => {
+      setLoading(true);
 
-      notify({
-        type: "success",
-        title: "profile",
-        message: data?.message || "Berhasil Login",
-      });
+      try {
+        const data = await api.post("user/login", values);
 
-      await fetchProfile();
-    } catch (err) {
-      handleApiError(err, notify, "login");
-      setIsFetched(true);
-    }
-  };
+        notify({
+          type: "success",
+          title: "profile",
+          message: data?.message || "Berhasil Login",
+        });
+
+        await fetchProfile();
+      } catch (err) {
+        handleApiError(err, notify, "login");
+      }
+    },
+    [fetchProfile, notify]
+  );
 
   useEffect(() => {
-    fetchProfile();
+    const controller = new AbortController();
+
+    fetchProfile(controller.signal);
+
+    return controller.abort();
   }, [fetchProfile]);
 
+  const contextValue = useMemo(() => {
+    return { user, loading, fetchProfile, login };
+  }, [user, loading, fetchProfile, login]);
+
   return (
-    <AuthContext.Provider
-      value={{ user, loading: !isFetched && loading, fetchProfile, login }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
