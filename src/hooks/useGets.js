@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../api/axios";
-import useNotification from "./useNotification";
 import { handleApiError } from "../utils/error";
+import { useNotification } from "../context/NotificationContext";
 
 const useGets = ({ endpoint, initialParams = {}, config = {} }) => {
   const [params, setParams] = useState(initialParams);

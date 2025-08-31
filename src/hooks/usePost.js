@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import api from "../api/axios";
-import useNotification from "./useNotification";
+import { useNotification } from "../context/NotificationContext";
 
 const usePost = ({ endpoint, refetch = () => {}, reset = () => {} }) => {
   const [loading, setLoading] = useState(false);
