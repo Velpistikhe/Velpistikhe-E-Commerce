@@ -22,7 +22,7 @@ const LoginForm = () => {
         name={"password"}
         rules={[{ required: true, message: "Username kosong" }]}
       >
-        <Input type="password" />
+        <Input.Password />
       </Form.Item>
       <Flex justify="right">
         <Button
