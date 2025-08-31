@@ -2,16 +2,18 @@ import { Route, Routes } from "react-router";
 import AuthRoute from "./AuthRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import Layouts from "../components/Layouts";
-import Dashboard from "../modules/dashboard/pages/Dashboard";
-import Items from "../modules/item/pages/Items";
+import Register from "../modules/register/pages/Register";
 import Login from "../modules/login/pages/Login";
 import NotFound from "../components/NotFound";
+import Dashboard from "../modules/dashboard/pages/Dashboard";
+import Items from "../modules/item/pages/Items";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<AuthRoute />}>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route element={<Layouts />}>

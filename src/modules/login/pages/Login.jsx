@@ -1,6 +1,7 @@
 import { Layout, theme } from "antd";
 import { Content } from "antd/es/layout/layout";
 import LoginForm from "../components/LoginForm";
+import { Link } from "react-router";
 
 const Login = () => {
   const {
@@ -12,6 +13,9 @@ const Login = () => {
       <Content>
         <h1>Login</h1>
         <LoginForm />
+        <p>
+          Belum Punya Akun? <Link to={"/register"}>Buat Akun</Link>
+        </p>
       </Content>
     </Layout>
   );

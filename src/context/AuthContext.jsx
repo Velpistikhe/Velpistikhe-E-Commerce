@@ -14,7 +14,7 @@ export const AuthContextProvider = ({ children }) => {
   const fetchProfile = useCallback(async () => {
     setLoading(true);
     try {
-      setUser(true);
+      setUser(null);
       setIsFetched(true);
     } catch (error) {
       setIsFetched(true);

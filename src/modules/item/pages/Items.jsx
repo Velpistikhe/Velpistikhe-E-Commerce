@@ -9,7 +9,7 @@ const Items = () => {
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [name, setName] = useState(null);
   const { data, loading, isFetched, refetch, setParams } = useGets({
-    endpoint: "items",
+    endpoint: "item",
     initialParams: {
       page: 1,
       limit: 10,
