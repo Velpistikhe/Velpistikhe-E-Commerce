@@ -7,16 +7,7 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Flex,
-  Layout,
-  Menu,
-  Popover,
-  Space,
-  theme,
-} from "antd";
+import { Avatar, Button, Flex, Layout, Menu, Popover, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useCallback, useContext, useMemo, useState } from "react";

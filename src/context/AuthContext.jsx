@@ -7,7 +7,7 @@ import {
 } from "react";
 import api from "../api/axios";
 import { useNotification } from "./NotificationContext";
-import { handleApiError } from "../utils/error";
+import useHandleApiError from "../hooks/useHandleApiError";
 
 export const AuthContext = createContext({
   user: null,
@@ -21,6 +21,7 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const { notify } = useNotification();
+  const { handleApiError } = useHandleApiError();
 
   const fetchProfile = useCallback(
     async (signal) => {
@@ -29,16 +30,16 @@ export const AuthContextProvider = ({ children }) => {
       try {
         const { data } = await api.get("user/profile", {
           signal,
+          withCredentials: true,
         });
 
         setUser(data?.user || null);
         setLoading(false);
-      } catch (err) {
-        handleApiError(err, notify, "profile");
-        setLoading(false);
+      } catch (error) {
+        handleApiError({ error, notify, endpoint: "profile", setLoading });
       }
     },
-    [notify]
+    [notify, handleApiError]
   );
 
   const login = useCallback(
@@ -46,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
       setLoading(true);
 
       try {
-        const data = await api.post("user/login", values);
+        const { data } = await api.post("user/login", values);
 
         notify({
           type: "success",
@@ -56,11 +57,10 @@ export const AuthContextProvider = ({ children }) => {
 
         await fetchProfile();
       } catch (err) {
-        handleApiError(err, notify, "login");
-        setLoading(false);
+        handleApiError({ err, notify, endpoint: "login", setLoading });
       }
     },
-    [fetchProfile, notify]
+    [fetchProfile, notify, handleApiError]
   );
 
   const logout = useCallback(async () => {
@@ -75,19 +75,19 @@ export const AuthContextProvider = ({ children }) => {
         message: data?.message || "Berhasil Log out",
       });
 
-      fetchProfile();
-    } catch (error) {
-      handleApiError(error, notify, "Log out");
+      setUser(null);
       setLoading(false);
+    } catch (error) {
+      handleApiError({ error, notify, endpoint: "Log out", setLoading });
     }
-  }, [notify, fetchProfile]);
+  }, [notify, handleApiError]);
 
   useEffect(() => {
     const controller = new AbortController();
 
     fetchProfile(controller.signal);
 
-    return controller.abort();
+    return () => controller.abort();
   }, [fetchProfile]);
 
   const contextValue = useMemo(() => {

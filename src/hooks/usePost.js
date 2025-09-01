@@ -1,10 +1,12 @@
 import { useCallback, useState } from "react";
 import api from "../api/axios";
 import { useNotification } from "../context/NotificationContext";
+import useHandleApiError from "./useHandleApiError";
 
 const usePost = ({ endpoint, refetch = () => {}, reset = () => {} }) => {
   const [loading, setLoading] = useState(false);
   const { notify } = useNotification();
+  const { handleApiError } = useHandleApiError();
 
   const postData = useCallback(
     async ({ data }) => {
@@ -23,23 +25,12 @@ const usePost = ({ endpoint, refetch = () => {}, reset = () => {} }) => {
           message: response.data.message,
         });
       } catch (error) {
-        if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
-          return;
-        }
-
-        notify({
-          type: "error",
-          title: endpoint,
-          message:
-            error?.response?.data?.message ||
-            error?.message ||
-            "Internal Server Error",
-        });
+        handleApiError({ error, endpoint, setLoading });
       } finally {
         setLoading(false);
       }
     },
-    [endpoint, notify, refetch, reset]
+    [endpoint, notify, refetch, reset, handleApiError]
   );
 
   return { postData, loading };
