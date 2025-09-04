@@ -19,7 +19,7 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
   return (
     <Routes>
       <Route
-        element={<UserLayout darkMode={darkMode} setdarkMode={setDarkMode} />}
+        element={<UserLayout darkMode={darkMode} setDarkMode={setDarkMode} />}
       >
         <Route index element={<Home />} />
         <Route path="*" element={<NotFound />} />

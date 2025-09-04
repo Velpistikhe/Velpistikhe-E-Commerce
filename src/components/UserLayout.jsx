@@ -1,20 +1,18 @@
 import {
-  BulbFilled,
-  BulbOutlined,
   FacebookOutlined,
   GithubOutlined,
   InstagramOutlined,
   MoonOutlined,
   SunOutlined,
 } from "@ant-design/icons";
-import { Flex, Layout, Space, Switch, theme, Typography } from "antd";
+import { Layout, Space, Switch, theme, Typography } from "antd";
 import Title from "antd/es/typography/Title";
 import { Outlet, useNavigate } from "react-router";
 import UserMenu from "./UserMenu";
 
 const { Header, Content, Footer } = Layout;
 
-const UserLayout = ({ darkMode, setdarkMode }) => {
+const UserLayout = ({ darkMode, setDarkMode }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -43,7 +41,7 @@ const UserLayout = ({ darkMode, setdarkMode }) => {
           <Space>
             <Switch
               checked={darkMode}
-              onChange={setdarkMode}
+              onChange={setDarkMode}
               checkedChildren={<SunOutlined />}
               unCheckedChildren={<MoonOutlined />}
             />

@@ -1,7 +1,9 @@
+import Products from "../../UserProducts.jsx/pages/Products";
+
 const Home = () => {
   return (
     <>
-      <h1>Home</h1>
+      <Products />
     </>
   );
 };
