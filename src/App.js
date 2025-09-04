@@ -13,15 +13,15 @@ function App() {
   const theme = darkMode ? darkTheme : lightTheme;
 
   return (
-    <ConfigProvider theme={theme}>
-      <NotificationProvider>
-        <AuthContextProvider>
-          <Router>
+    <Router>
+      <ConfigProvider theme={theme}>
+        <NotificationProvider>
+          <AuthContextProvider>
             <AppRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
-          </Router>
-        </AuthContextProvider>
-      </NotificationProvider>
-    </ConfigProvider>
+          </AuthContextProvider>
+        </NotificationProvider>
+      </ConfigProvider>
+    </Router>
   );
 }
 

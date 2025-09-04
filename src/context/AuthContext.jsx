@@ -9,6 +9,7 @@ import {
 import api from "../api/axios";
 import { useNotification } from "./NotificationContext";
 import useHandleApiError from "../hooks/useHandleApiError";
+import { useNavigate } from "react-router";
 
 const AuthContext = createContext({
   user: null,
@@ -23,6 +24,7 @@ export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const { notify } = useNotification();
   const { handleApiError } = useHandleApiError();
+  const navigate = useNavigate();
 
   const fetchProfile = useCallback(
     async (signal) => {
@@ -52,16 +54,18 @@ export const AuthContextProvider = ({ children }) => {
 
         notify({
           type: "success",
-          title: "profile",
+          title: "Login",
           message: data?.message || "Berhasil Login",
         });
+
+        navigate("/");
 
         await fetchProfile();
       } catch (error) {
         handleApiError({ error, title: "Login", setLoading });
       }
     },
-    [fetchProfile, notify, handleApiError]
+    [fetchProfile, navigate, notify, handleApiError]
   );
 
   const logout = useCallback(async () => {
@@ -72,11 +76,12 @@ export const AuthContextProvider = ({ children }) => {
 
       notify({
         type: "success",
-        title: "Log out",
+        title: "Logout",
         message: data?.message || "Berhasil Log out",
       });
 
       setUser(null);
+
       setLoading(false);
     } catch (error) {
       handleApiError({ error, title: "Log out", setLoading });

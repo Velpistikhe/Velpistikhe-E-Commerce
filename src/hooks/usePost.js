@@ -3,7 +3,7 @@ import api from "../api/axios";
 import { useNotification } from "../context/NotificationContext";
 import useHandleApiError from "./useHandleApiError";
 
-const usePost = ({ endpoint, refetch = () => {}, reset = () => {} }) => {
+const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
   const [loading, setLoading] = useState(false);
   const { notify } = useNotification();
   const { handleApiError } = useHandleApiError();
@@ -21,16 +21,16 @@ const usePost = ({ endpoint, refetch = () => {}, reset = () => {} }) => {
         reset();
         notify({
           type: "success",
-          title: endpoint,
+          title,
           message: response.data.message,
         });
       } catch (error) {
-        handleApiError({ error, endpoint, setLoading });
+        handleApiError({ error, title, endpoint, setLoading });
       } finally {
         setLoading(false);
       }
     },
-    [endpoint, notify, refetch, reset, handleApiError]
+    [endpoint, title, notify, refetch, reset, handleApiError]
   );
 
   return { postData, loading };

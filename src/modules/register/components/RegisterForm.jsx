@@ -6,8 +6,10 @@ const RegisterForm = () => {
   const navigate = useNavigate();
   const { postData, loading } = usePost({
     endpoint: "user",
+    title: "Register",
     reset: () => navigate("/login"),
   });
+
   const onFinish = (values) => {
     postData({ data: values });
   };

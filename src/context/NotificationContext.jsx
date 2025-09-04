@@ -15,7 +15,7 @@ export const NotificationProvider = ({ children }) => {
       }
 
       api[type]({
-        message: title?.toUpperCase() ?? "",
+        message: title ?? "",
         description: message ?? "",
         placement: "topRight",
       });
