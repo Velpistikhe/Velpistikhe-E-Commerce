@@ -5,6 +5,8 @@ import SecondaryLayouts from "../components/SecondaryLayouts";
 import UserLayout from "../components/UserLayout";
 import Home from "../modules/home/pages/Home";
 import NotFound from "../components/NotFound";
+import Login from "../modules/login/pages/Login";
+import Register from "../modules/register/pages/Register";
 
 const AppRoutes = ({ darkMode, setDarkMode }) => {
   const { loading } = useAuth();
@@ -22,10 +24,11 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
         element={<UserLayout darkMode={darkMode} setDarkMode={setDarkMode} />}
       >
         <Route index element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Route>
       {/* <Route element={<AuthRoute />}>
-        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
       <Route element={<ProtectedRoute />}>

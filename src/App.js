@@ -4,11 +4,11 @@ import AppRoutes from "./routes/AppRoutes";
 import { AuthContextProvider } from "./context/AuthContext";
 import { ConfigProvider } from "antd";
 import { NotificationProvider } from "./context/NotificationContext";
-import { useState } from "react";
 import { darkTheme, lightTheme } from "./utils/themeConfig";
+import useThemeMode from "./hooks/useThemeMode";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useThemeMode();
 
   const theme = darkMode ? darkTheme : lightTheme;
 

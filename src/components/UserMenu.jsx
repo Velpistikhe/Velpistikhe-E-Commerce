@@ -6,9 +6,11 @@ import {
   ProfileOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router";
 
 const UserMenu = ({ setOpenLogin }) => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const items = [
     user
@@ -23,7 +25,7 @@ const UserMenu = ({ setOpenLogin }) => {
           key: "login",
           label: "Login",
           icon: <LoginOutlined />,
-          onClick: () => setOpenLogin(true),
+          onClick: () => navigate("/login"),
         },
   ];
 

@@ -14,7 +14,11 @@ const RegisterForm = () => {
 
   return (
     <>
-      <Form onFinish={onFinish}>
+      <Form
+        onFinish={onFinish}
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 16 }}
+      >
         <Form.Item
           label={"Username"}
           name={"username"}
