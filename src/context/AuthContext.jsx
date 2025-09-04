@@ -37,10 +37,10 @@ export const AuthContextProvider = ({ children }) => {
         setUser(data?.user || null);
         setLoading(false);
       } catch (error) {
-        handleApiError({ error, notify, endpoint: "profile", setLoading });
+        handleApiError({ error, title: "Profile", setLoading });
       }
     },
-    [notify, handleApiError]
+    [handleApiError]
   );
 
   const login = useCallback(
@@ -57,8 +57,8 @@ export const AuthContextProvider = ({ children }) => {
         });
 
         await fetchProfile();
-      } catch (err) {
-        handleApiError({ err, notify, endpoint: "login", setLoading });
+      } catch (error) {
+        handleApiError({ error, title: "Login", setLoading });
       }
     },
     [fetchProfile, notify, handleApiError]
@@ -79,7 +79,7 @@ export const AuthContextProvider = ({ children }) => {
       setUser(null);
       setLoading(false);
     } catch (error) {
-      handleApiError({ error, notify, endpoint: "Log out", setLoading });
+      handleApiError({ error, title: "Log out", setLoading });
     }
   }, [notify, handleApiError]);
 

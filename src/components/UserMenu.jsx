@@ -8,12 +8,17 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 const UserMenu = ({ setOpenLogin }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const items = [
     user
       ? ({ key: "profile", label: "Profile", icon: <ProfileOutlined /> },
-        { key: "logout", label: "Logout", icon: <LogoutOutlined /> })
+        {
+          key: "logout",
+          label: "Logout",
+          icon: <LogoutOutlined />,
+          onClick: () => logout(),
+        })
       : {
           key: "login",
           label: "Login",

@@ -12,16 +12,18 @@ const useGets = ({ endpoint, name, initialParams = {}, config = {} }) => {
   const fetchData = useCallback(
     async (signal) => {
       setLoading(true);
+
       try {
         const response = await api.get(endpoint, {
           signal,
           withCredentials: true,
           params,
         });
+
         setData(response?.data || []);
         setIsFetched(true);
       } catch (error) {
-        handleApiError({ error, title: name, endpoint, setLoading });
+        handleApiError({ error, title: name, setLoading });
         setIsFetched(true);
       } finally {
         setLoading(false);
