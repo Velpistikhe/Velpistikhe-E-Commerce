@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../api/axios";
-import { useNotification } from "../context/NotificationContext";
 import useHandleApiError from "./useHandleApiError";
 
-const useGets = ({ endpoint, initialParams = {}, config = {} }) => {
+const useGets = ({ endpoint, name, initialParams = {}, config = {} }) => {
   const [params, setParams] = useState(initialParams);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isFetched, setIsFetched] = useState(false);
-  const { notify } = useNotification();
   const { handleApiError } = useHandleApiError();
 
   const fetchData = useCallback(
@@ -23,13 +21,13 @@ const useGets = ({ endpoint, initialParams = {}, config = {} }) => {
         setData(response?.data || []);
         setIsFetched(true);
       } catch (error) {
-        handleApiError({ error, notify, endpoint, setLoading });
+        handleApiError({ error, title: name, endpoint, setLoading });
         setIsFetched(true);
       } finally {
         setLoading(false);
       }
     },
-    [endpoint, notify, params, handleApiError]
+    [endpoint, name, params, handleApiError]
   );
 
   useEffect(() => {

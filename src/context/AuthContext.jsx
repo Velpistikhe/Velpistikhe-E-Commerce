@@ -1,6 +1,7 @@
 import {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -9,7 +10,7 @@ import api from "../api/axios";
 import { useNotification } from "./NotificationContext";
 import useHandleApiError from "../hooks/useHandleApiError";
 
-export const AuthContext = createContext({
+const AuthContext = createContext({
   user: null,
   loading: false,
   fetchProfile: () => {},
@@ -98,3 +99,5 @@ export const AuthContextProvider = ({ children }) => {
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

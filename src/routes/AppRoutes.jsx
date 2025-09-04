@@ -1,19 +1,13 @@
 import { Route, Routes } from "react-router";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import AuthRoute from "./AuthRoute";
-import ProtectedRoute from "./ProtectedRoute";
-import Layouts from "../components/Layouts";
-import Register from "../modules/register/pages/Register";
-import Login from "../modules/login/pages/Login";
-import NotFound from "../components/NotFound";
-import Dashboard from "../modules/dashboard/pages/Dashboard";
-import Items from "../modules/item/pages/Items";
+import { useAuth } from "../context/AuthContext";
 import Loading from "../components/Loading";
 import SecondaryLayouts from "../components/SecondaryLayouts";
+import UserLayout from "../components/UserLayout";
+import Home from "../modules/home/pages/Home";
+import NotFound from "../components/NotFound";
 
-const AppRoutes = () => {
-  const { loading } = useContext(AuthContext);
+const AppRoutes = ({ darkMode, setDarkMode }) => {
+  const { loading } = useAuth();
 
   if (loading)
     return (
@@ -24,10 +18,15 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route element={<AuthRoute />}>
+      <Route
+        element={<UserLayout darkMode={darkMode} setdarkMode={setDarkMode} />}
+      >
+        <Route index element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+      {/* <Route element={<AuthRoute />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<NotFound />} />
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route element={<Layouts />}>
@@ -35,7 +34,7 @@ const AppRoutes = () => {
           <Route path="/item" element={<Items />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-      </Route>
+      </Route> */}
     </Routes>
   );
 };

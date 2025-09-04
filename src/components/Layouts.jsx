@@ -10,14 +10,14 @@ import {
 import { Avatar, Button, Flex, Layout, Menu, Popover, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import logo from "../logo.png";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const Layouts = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG, colorBorder },

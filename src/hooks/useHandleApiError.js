@@ -5,14 +5,14 @@ const useHandleApiError = () => {
   const { notify } = useNotification();
 
   const handleApiError = useCallback(
-    ({ error, endpoint = "", setLoading = null }) => {
+    ({ error, title = "", setLoading = null }) => {
       if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
         return;
       }
 
       notify({
         type: "error",
-        title: endpoint,
+        title,
         message:
           error?.response?.data?.message ||
           error?.message ||

@@ -10,6 +10,7 @@ const Items = () => {
   const [name, setName] = useState(null);
   const { data, loading, isFetched, refetch, setParams } = useGets({
     endpoint: "item",
+    name: "Item",
     initialParams: {
       page: 1,
       limit: 10,
