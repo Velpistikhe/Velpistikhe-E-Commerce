@@ -1,9 +1,8 @@
 import { Button, Flex, Form, Input } from "antd";
-import { useContext } from "react";
-import { AuthContext } from "../../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 
 const LoginForm = () => {
-  const { login, loading } = useContext(AuthContext);
+  const { login, loading } = useAuth();
   const onFinish = (val) => {
     login(val);
   };

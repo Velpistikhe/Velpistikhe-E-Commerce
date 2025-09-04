@@ -1,23 +1,26 @@
-import { Layout, theme } from "antd";
-import { Content } from "antd/es/layout/layout";
+import { Modal } from "antd";
 import LoginForm from "../components/LoginForm";
 import { Link } from "react-router";
 
-const Login = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+const Login = ({ open, setOpen }) => {
+  const onCancel = () => {
+    setOpen(false);
+  };
 
   return (
-    <Layout style={{ minHeight: "100vh", backgroundColor: colorBgContainer }}>
-      <Content>
-        <h1>Login</h1>
-        <LoginForm />
-        <p>
-          Belum Punya Akun? <Link to={"/register"}>Buat Akun</Link>
-        </p>
-      </Content>
-    </Layout>
+    <Modal
+      destroyOnHidden={true}
+      footer={false}
+      onCancel={onCancel}
+      open={open}
+      width={"80%"}
+    >
+      <h1>Login</h1>
+      <LoginForm />
+      <p>
+        Belum Punya Akun? <Link to={"/register"}>Buat Akun</Link>
+      </p>
+    </Modal>
   );
 };
 

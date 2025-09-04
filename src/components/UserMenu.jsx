@@ -7,14 +7,19 @@ import {
 } from "@ant-design/icons";
 import { useAuth } from "../context/AuthContext";
 
-const UserMenu = () => {
+const UserMenu = ({ setOpenLogin }) => {
   const { user } = useAuth();
 
   const items = [
     user
       ? ({ key: "profile", label: "Profile", icon: <ProfileOutlined /> },
         { key: "logout", label: "Logout", icon: <LogoutOutlined /> })
-      : { key: "login", label: "Login", icon: <LoginOutlined /> },
+      : {
+          key: "login",
+          label: "Login",
+          icon: <LoginOutlined />,
+          onClick: () => setOpenLogin(true),
+        },
   ];
 
   return (
