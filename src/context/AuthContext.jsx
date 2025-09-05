@@ -58,7 +58,7 @@ export const AuthContextProvider = ({ children }) => {
           message: data?.message || "Berhasil Login",
         });
 
-        data.user.role === 2 ? navigate("/") : navigate("/dashboard");
+        navigate("/");
 
         await fetchProfile();
       } catch (error) {

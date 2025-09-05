@@ -25,7 +25,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0 2rem",
+          padding: "0 16px",
           backgroundColor: colorBgContainer,
         }}
       >

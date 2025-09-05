@@ -1,10 +1,20 @@
 import { Button, Flex, Form, Input } from "antd";
 import { useAuth } from "../../../context/AuthContext";
+import { useRef } from "react";
 
 const LoginForm = () => {
   const { login, loading } = useAuth();
+  const isSubmitting = useRef(false);
+
   const onFinish = (val) => {
-    login(val);
+    if (isSubmitting.current) return;
+    isSubmitting.current = true;
+
+    try {
+      login(val);
+    } finally {
+      isSubmitting.current = false;
+    }
   };
 
   return (

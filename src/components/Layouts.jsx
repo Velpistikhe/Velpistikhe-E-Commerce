@@ -7,41 +7,19 @@ import {
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Flex, Layout, Menu, Popover, theme } from "antd";
+import { Button, Flex, Layout, Menu, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useCallback, useMemo, useState } from "react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import logo from "../logo.png";
-import { useAuth } from "../context/AuthContext";
+import UserMenu from "./UserMenu";
 
 const Layouts = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
   const {
-    token: { colorBgContainer, borderRadiusLG, colorBorder },
+    token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
-  const handleLogout = async () => {
-    await logout();
-
-    navigate("/login");
-  };
-
-  const content = (
-    <div style={{ padding: 16, width: 250 }}>
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 12 }}>
-        <Avatar size="large" icon={<UserOutlined />} />
-        <div style={{ marginLeft: 12 }}>
-          <div style={{ fontWeight: 600 }}>{user.nama}</div>
-        </div>
-      </div>
-      <Button type="primary" danger block onClick={handleLogout}>
-        Logout
-      </Button>
-    </div>
-  );
 
   const items = [
     { key: "1", icon: <HomeOutlined />, label: <Link to="/">Home</Link> },
@@ -124,7 +102,7 @@ const Layouts = () => {
       <Layout>
         <Header
           style={{
-            padding: 0,
+            padding: "0 16px 0 0",
             background: colorBgContainer,
             display: "flex",
             justifyContent: "space-between",
@@ -138,24 +116,7 @@ const Layouts = () => {
             onClick={toggleCollapsed}
             style={{ fontSize: "16px", width: 64, height: 64 }}
           />
-          <Popover content={content} trigger="click" placement="bottomRight">
-            <Flex
-              style={{
-                borderColor: colorBorder,
-                borderRadius: borderRadiusLG,
-                borderStyle: "solid",
-                borderWidth: 1,
-                cursor: "pointer",
-                height: "80%",
-                marginRight: 15,
-                padding: 10,
-              }}
-              align="center"
-            >
-              <Avatar icon={<UserOutlined />} size="default" />
-              <span style={{ marginLeft: 10 }}>{user.nama}</span>
-            </Flex>
-          </Popover>
+          <UserMenu />
         </Header>
         <Content
           style={{

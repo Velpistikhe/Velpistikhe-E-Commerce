@@ -1,4 +1,4 @@
-import Products from "../../UserProducts.jsx/pages/Products";
+import Products from "../../user-products/pages/Products";
 
 const Home = () => {
   return (
