@@ -38,14 +38,12 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
         </Title>
 
         <Space size="large" align="center">
-          <Space>
-            <Switch
-              checked={darkMode}
-              onChange={setDarkMode}
-              checkedChildren={<SunOutlined />}
-              unCheckedChildren={<MoonOutlined />}
-            />
-          </Space>
+          <Switch
+            checked={darkMode}
+            onChange={setDarkMode}
+            checkedChildren={<SunOutlined />}
+            unCheckedChildren={<MoonOutlined />}
+          />
 
           <UserMenu />
         </Space>

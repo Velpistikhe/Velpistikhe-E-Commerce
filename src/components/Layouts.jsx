@@ -3,20 +3,23 @@ import {
   HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  MoonOutlined,
   SendOutlined,
   SettingOutlined,
+  SunOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Flex, Layout, Menu, theme } from "antd";
+import { Button, Flex, Layout, Menu, Space, Switch, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import logo from "../logo.png";
 import UserMenu from "./UserMenu";
+import useCollapseMenu from "../hooks/useCollapseMenu";
 
-const Layouts = () => {
-  const [collapsed, setCollapsed] = useState(false);
+const Layouts = ({ darkMode, setDarkMode }) => {
+  const [collapsed, setCollapsed] = useCollapseMenu();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -49,9 +52,10 @@ const Layouts = () => {
       ],
     },
   ];
+
   const toggleCollapsed = useCallback(() => {
     setCollapsed((prev) => !prev);
-  }, []);
+  }, [setCollapsed]);
 
   const location = useLocation();
   const selectedKey = useMemo(() => {
@@ -122,7 +126,15 @@ const Layouts = () => {
             onClick={toggleCollapsed}
             style={{ fontSize: "16px", width: 64, height: 64 }}
           />
-          <UserMenu />
+          <Space>
+            <Switch
+              checked={darkMode}
+              onChange={setDarkMode}
+              checkedChildren={<SunOutlined />}
+              unCheckedChildren={<MoonOutlined />}
+            />
+            <UserMenu />
+          </Space>
         </Header>
         <Content
           style={{

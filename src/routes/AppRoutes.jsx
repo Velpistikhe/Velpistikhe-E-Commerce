@@ -39,7 +39,9 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
 
       <Route element={<ProtectedRoute />}>
         <Route element={<StaffRoute />}>
-          <Route element={<Layouts />}>
+          <Route
+            element={<Layouts darkMode={darkMode} setDarkMode={setDarkMode} />}
+          >
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/item" element={<Items />} />
             <Route path="*" element={<NotFound />} />
