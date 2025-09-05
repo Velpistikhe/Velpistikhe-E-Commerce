@@ -58,7 +58,7 @@ export const AuthContextProvider = ({ children }) => {
           message: data?.message || "Berhasil Login",
         });
 
-        navigate("/");
+        data.user.role === 2 ? navigate("/") : navigate("/dashboard");
 
         await fetchProfile();
       } catch (error) {
@@ -81,12 +81,12 @@ export const AuthContextProvider = ({ children }) => {
       });
 
       setUser(null);
-
+      navigate("/");
       setLoading(false);
     } catch (error) {
       handleApiError({ error, title: "Log out", setLoading });
     }
-  }, [notify, handleApiError]);
+  }, [notify, handleApiError, navigate]);
 
   useEffect(() => {
     const controller = new AbortController();
