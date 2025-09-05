@@ -4,6 +4,7 @@ import {
   LogoutOutlined,
   LoginOutlined,
   ProfileOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
@@ -26,9 +27,10 @@ const UserMenu = () => {
         user.role === "Staff" && {
           key: "app",
           label: "App Manager",
+          icon: <AppstoreOutlined />,
           onClick: () => navigate("/dashboard"),
         },
-        {
+        user.role === "Guest" && {
           key: "profile",
           label: "Profile",
           icon: <ProfileOutlined />,

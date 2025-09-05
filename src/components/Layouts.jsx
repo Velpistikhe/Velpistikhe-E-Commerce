@@ -11,7 +11,7 @@ import { Button, Flex, Layout, Menu, theme } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useCallback, useMemo, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router";
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import logo from "../logo.png";
 import UserMenu from "./UserMenu";
 
@@ -20,6 +20,7 @@ const Layouts = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const navigate = useNavigate();
 
   const items = [
     { key: "1", icon: <HomeOutlined />, label: <Link to="/">Home</Link> },
@@ -38,7 +39,7 @@ const Layouts = () => {
     {
       key: "3",
       icon: <SettingOutlined />,
-      label: "Setting",
+      label: "Pengaturan",
       children: [
         {
           key: "3-1",
@@ -75,21 +76,26 @@ const Layouts = () => {
       >
         <Header
           style={{
-            padding: 0,
+            alignContent: "center",
             background: colorBgContainer,
+            padding: 0,
+            cursor: "pointer",
           }}
+          onClick={() => navigate("/")}
         >
-          <Flex style={{ height: "100%" }} align="center">
+          <Flex style={{ height: 35, margin: "auto" }} align="center">
             <img
               style={{
                 height: "100%",
                 borderRadius: "100%",
-                padding: 10,
+                margin: 8,
               }}
               src={logo}
               alt="logo"
             />
-            <h1 style={{ display: "inline-block" }}>Velpistikhe</h1>
+            <h1 style={{ display: "inline-block", overflow: "hidden" }}>
+              Velpistikhe E-Shop
+            </h1>
           </Flex>
         </Header>
         <Menu
