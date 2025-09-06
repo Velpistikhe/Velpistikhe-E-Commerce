@@ -9,11 +9,11 @@ const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
   const { handleApiError } = useHandleApiError();
 
   const postData = useCallback(
-    async ({ data }) => {
+    async ({ formData }) => {
       setLoading(true);
 
       try {
-        const response = await api.post(endpoint, data, {
+        const { data } = await api.post(endpoint, formData, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
@@ -25,7 +25,7 @@ const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
         notify({
           type: "success",
           title,
-          message: response.data.message,
+          message: data.message,
         });
       } catch (error) {
         handleApiError({ error, title, endpoint, setLoading });

@@ -33,7 +33,7 @@ const ProductForm = ({ method, loading }) => {
       formData.append("file", file.originFileObj);
     });
 
-    method({ data: formData });
+    method({ formData: formData });
   };
 
   const uploadButton = (
