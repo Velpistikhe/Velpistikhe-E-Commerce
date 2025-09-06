@@ -28,7 +28,7 @@ const UserMenu = () => {
           key: "app",
           label: "App Manager",
           icon: <AppstoreOutlined />,
-          onClick: () => navigate("/dashboard"),
+          onClick: () => navigate("/admin/dashboard"),
         },
         user.role === "Guest" && {
           key: "profile",
@@ -89,7 +89,7 @@ const UserMenu = () => {
         align="center"
       >
         <Avatar icon={<UserOutlined />} size="small" />
-        {<span style={{ marginLeft: 10 }}>{user?.nama || "test"}</span>}
+        {user?.nama && <span style={{ marginLeft: 10 }}>{user?.nama}</span>}
       </Flex>
     </Popover>
   );

@@ -1,9 +1,9 @@
-import Products from "../../user-products/pages/Products";
+import UserProducts from "../../products/pages/UserProducts";
 
 const Home = () => {
   return (
     <>
-      <Products />
+      <UserProducts />
     </>
   );
 };

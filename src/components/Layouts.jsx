@@ -1,11 +1,11 @@
 import {
-  FolderOpenOutlined,
-  HomeOutlined,
+  DashboardOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   MoonOutlined,
-  SendOutlined,
+  ProductOutlined,
   SettingOutlined,
+  SmallDashOutlined,
   SunOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -26,16 +26,20 @@ const Layouts = ({ darkMode, setDarkMode }) => {
   const navigate = useNavigate();
 
   const items = [
-    { key: "1", icon: <HomeOutlined />, label: <Link to="/">Home</Link> },
+    {
+      key: "1",
+      icon: <DashboardOutlined />,
+      label: <Link to="/admin/dashboard">Dashboard</Link>,
+    },
     {
       key: "2",
-      icon: <FolderOpenOutlined />,
-      label: "Modules",
+      icon: <ProductOutlined />,
+      label: "Products",
       children: [
         {
           key: "2-1",
-          icon: <SendOutlined />,
-          label: <Link to="/item">Item</Link>,
+          icon: <SmallDashOutlined />,
+          label: <Link to="/admin/products">List</Link>,
         },
       ],
     },
@@ -47,7 +51,7 @@ const Layouts = ({ darkMode, setDarkMode }) => {
         {
           key: "3-1",
           icon: <UserOutlined />,
-          label: <Link to="/user">User</Link>,
+          label: <Link to="/admin/user">User</Link>,
         },
       ],
     },

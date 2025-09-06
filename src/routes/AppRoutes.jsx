@@ -11,8 +11,8 @@ import AuthRoute from "./AuthRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import Layouts from "../components/Layouts";
 import Dashboard from "../modules/dashboard/pages/Dashboard";
-import Items from "../modules/item/pages/Items";
 import StaffRoute from "./StaffRoute";
+import AdminProducts from "../modules/products/pages/AdminProducts";
 
 const AppRoutes = ({ darkMode, setDarkMode }) => {
   const { loading } = useAuth();
@@ -38,13 +38,13 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
       </Route>
 
       <Route element={<ProtectedRoute />}>
-        <Route element={<StaffRoute />}>
+        <Route path="/admin" element={<StaffRoute />}>
           <Route
             element={<Layouts darkMode={darkMode} setDarkMode={setDarkMode} />}
           >
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/item" element={<Items />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/*" element={<NotFound />} />
           </Route>
         </Route>
       </Route>

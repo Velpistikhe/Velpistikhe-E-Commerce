@@ -108,7 +108,7 @@ const products = [
   },
 ];
 
-const ProductList = () => {
+const UserProductList = () => {
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
@@ -117,7 +117,7 @@ const ProductList = () => {
     <div style={{ padding: "2rem" }}>
       <Row gutter={[24, 24]} justify="center">
         {products.map((product, key) => (
-          <Col xs={24} sm={12} md={12} lg={4} key={key}>
+          <Col xs={12} sm={12} md={12} lg={4} key={key}>
             <Card
               hoverable
               cover={
@@ -128,7 +128,7 @@ const ProductList = () => {
                     style={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "fill",
+                      objectFit: "cover",
                     }}
                   />
                 </div>
@@ -144,4 +144,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default UserProductList;
