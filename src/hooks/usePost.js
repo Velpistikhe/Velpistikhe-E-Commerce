@@ -15,6 +15,9 @@ const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
       try {
         const response = await api.post(endpoint, data, {
           withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         });
 
         refetch();

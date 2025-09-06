@@ -1,16 +1,18 @@
-import { Flex, Form, Input, Select, theme } from "antd";
+import { Form, Input, Select, theme, Upload } from "antd";
 import InputAngka from "../../../components/InputAngka";
 import { ButtonSubmit } from "../../../components/Buttons";
 import TextArea from "antd/es/input/TextArea";
+import { PlusOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const ProductForm = ({ method, loading }) => {
+  const [fileList, setFileList] = useState([]);
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
 
   const formStyle = {
     textAlign: "left",
-    width: 500,
     margin: "auto",
     borderStyle: "solid",
     borderWidth: 1,
@@ -18,12 +20,43 @@ const ProductForm = ({ method, loading }) => {
     padding: 20,
   };
 
-  const onFinish = (e) => {
-    method({ data: e });
+  const onFinish = (values) => {
+    const formData = new FormData();
+
+    formData.append("nama", values.nama);
+    formData.append("harga", values.harga);
+    formData.append("kondisi", values.kondisi);
+    formData.append("spesifikasi", values.spesifikasi || "");
+    formData.append("deskripsi", values.deskripsi || "");
+
+    fileList.forEach((file) => {
+      formData.append("file", file.originFileObj);
+    });
+
+    method({ data: formData });
+  };
+
+  const uploadButton = (
+    <button
+      style={{ border: 0, background: "none", cursor: "pointer" }}
+      type="button"
+    >
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
+
+  const handleBeforeUpload = (file) => {
+    return false;
+  };
+
+  const onChange = (info) => {
+    setFileList(info.fileList);
   };
 
   return (
     <Form
+      encType="multipart/form-data"
       onFinish={onFinish}
       labelCol={{ span: 9 }}
       wrapperCol={{ span: 18 }}
@@ -61,9 +94,21 @@ const ProductForm = ({ method, loading }) => {
       <Form.Item label={"Deskripsi"} name={"deskripsi"}>
         <TextArea rows={5} />
       </Form.Item>
-      <Flex justify="center">
+      <Form.Item label={"Foto"}>
+        <Upload
+          accept="image"
+          beforeUpload={handleBeforeUpload}
+          listType="picture-card"
+          maxCount={5}
+          onChange={onChange}
+          showUploadList={{ showPreviewIcon: false }}
+        >
+          {uploadButton}
+        </Upload>
+      </Form.Item>
+      <Form.Item label={null}>
         <ButtonSubmit loading={loading} disable={loading} />
-      </Flex>
+      </Form.Item>
     </Form>
   );
 };

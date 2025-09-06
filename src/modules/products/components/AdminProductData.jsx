@@ -34,7 +34,7 @@ const AdminProductData = ({
       align: "left",
       filter: true,
       sorter: true,
-      key: "Deskripsi",
+      key: "deskripsi",
       title: "Deskripsi",
     },
   ];
