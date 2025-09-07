@@ -1,14 +1,25 @@
 import { Outlet, useNavigate } from "react-router";
-import { Layout, Space, Switch, theme, Typography } from "antd";
+import {
+  Badge,
+  Flex,
+  Input,
+  Layout,
+  Space,
+  Switch,
+  theme,
+  Typography,
+} from "antd";
 import Title from "antd/es/typography/Title";
 import {
   FacebookOutlined,
   GithubOutlined,
   InstagramOutlined,
   MoonOutlined,
+  ShoppingCartOutlined,
   SunOutlined,
 } from "@ant-design/icons";
 import UserMenu from "./UserMenu";
+import logo from "../logo.png";
 
 const { Header, Content, Footer } = Layout;
 
@@ -22,31 +33,55 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
     <Layout style={{ minHeight: "100vh" }}>
       <Header
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0 16px",
+          alignContent: "center",
           backgroundColor: colorBgContainer,
+          padding: "0 16px",
         }}
       >
-        <Title
-          level={3}
-          style={{ margin: 0, cursor: "pointer" }}
-          onClick={() => navigate("/")}
+        <Flex
+          style={{ cursor: "pointer", margin: "auto", width: "80vw" }}
+          align="center"
+          justify="space-between"
         >
-          Vepistikhe E-Shop
-        </Title>
+          <Flex onClick={() => navigate("/")}>
+            <img
+              style={{
+                backgroundColor: "black",
+                height: 37,
+                width: 37,
+                borderRadius: "100%",
+                padding: 5,
+                margin: "0 7px",
+              }}
+              src={logo}
+              alt="logo"
+            />
+            <Title level={3} style={{ margin: 0 }}>
+              Velpistikhe E-Shop
+            </Title>
+          </Flex>
 
-        <Space size="large" align="center">
-          <Switch
-            checked={darkMode}
-            onChange={setDarkMode}
-            checkedChildren={<SunOutlined />}
-            unCheckedChildren={<MoonOutlined />}
-          />
+          <Input style={{ width: "50%" }} />
 
-          <UserMenu />
-        </Space>
+          <Flex align="center">
+            <Badge>
+              <ShoppingCartOutlined
+                style={{
+                  cursor: "pointer",
+                  fontSize: 24,
+                }}
+              />
+            </Badge>
+            <UserMenu />
+
+            <Switch
+              checked={darkMode}
+              onChange={setDarkMode}
+              checkedChildren={<SunOutlined />}
+              unCheckedChildren={<MoonOutlined />}
+            />
+          </Flex>
+        </Flex>
       </Header>
 
       <Content

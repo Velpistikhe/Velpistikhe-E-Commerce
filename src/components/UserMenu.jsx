@@ -13,7 +13,7 @@ const UserMenu = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const {
-    token: { borderRadiusLG, colorBorder },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
   const handleLogout = () => {
@@ -76,20 +76,15 @@ const UserMenu = () => {
   return (
     <Popover content={content} trigger="click" placement="bottomRight">
       <Flex
-        style={{
-          borderColor: colorBorder,
-          borderRadius: borderRadiusLG,
-          borderStyle: "solid",
-          borderWidth: 1,
-          cursor: "pointer",
-          height: 50,
-          paddingLeft: 10,
-          paddingRight: 10,
-        }}
         align="center"
+        gap={10}
+        style={{
+          cursor: "pointer",
+          padding: "0 10px",
+        }}
       >
-        <Avatar icon={<UserOutlined />} size="small" />
-        {user?.nama && <span style={{ marginLeft: 10 }}>{user?.nama}</span>}
+        <Avatar icon={<UserOutlined />} size="default" />
+        {user?.nama && <span>{user?.nama}</span>}
       </Flex>
     </Popover>
   );
