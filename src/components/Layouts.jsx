@@ -84,26 +84,28 @@ const Layouts = ({ darkMode, setDarkMode }) => {
       >
         <Header
           style={{
-            alignContent: "center",
             background: colorBgContainer,
-            padding: 0,
             cursor: "pointer",
+            padding: 0,
           }}
           onClick={() => navigate("/")}
         >
-          <Flex style={{ height: 35, margin: "auto" }} align="center">
+          <Flex align="center" style={{ height: "100%", overflow: "hidden" }}>
             <img
               style={{
-                height: "100%",
+                backgroundColor: "black",
+                height: 37,
+                width: 37,
                 borderRadius: "100%",
-                margin: 8,
+                padding: 5,
+                margin: "0 7px",
               }}
               src={logo}
               alt="logo"
             />
-            <h1 style={{ display: "inline-block", overflow: "hidden" }}>
-              Velpistikhe E-Shop
-            </h1>
+            {!collapsed && (
+              <h1 style={{ whiteSpace: "nowrap" }}>Velpistikhe E-Shop</h1>
+            )}
           </Flex>
         </Header>
         <Menu
