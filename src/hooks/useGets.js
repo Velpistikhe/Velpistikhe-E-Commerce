@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import api from "../api/axios";
 import useHandleApiError from "./useHandleApiError";
 
-const useGets = ({ endpoint, name, initialParams = {}, config = {} }) => {
+const useGets = ({ endpoint, name, initialParams = {} }) => {
   const [params, setParams] = useState(initialParams);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const useGets = ({ endpoint, name, initialParams = {}, config = {} }) => {
         setData(response?.data || []);
         setIsFetched(true);
       } catch (error) {
-        handleApiError({ error, title: name, setLoading });
+        handleApiError({ error, title: name });
         setIsFetched(true);
       } finally {
         setLoading(false);

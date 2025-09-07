@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const fetchProfile = useCallback(
-    async (signal) => {
+    async (signal, silent401 = false) => {
       setLoading(true);
 
       try {
@@ -39,7 +39,8 @@ export const AuthContextProvider = ({ children }) => {
         setUser(data?.user || null);
         setLoading(false);
       } catch (error) {
-        handleApiError({ error, title: "Profile", setLoading });
+        handleApiError({ error, title: "Profile", setLoading, silent401 });
+        return;
       }
     },
     [handleApiError]
@@ -91,7 +92,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetchProfile(controller.signal);
+    fetchProfile(controller.signal, true);
 
     return () => controller.abort();
   }, [fetchProfile]);

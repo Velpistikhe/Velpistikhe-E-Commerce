@@ -3,29 +3,23 @@ import api from "../api/axios";
 import { useNotification } from "../context/NotificationContext";
 import useHandleApiError from "./useHandleApiError";
 
-const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
+const useDelete = ({ endpoint, title, refetch }) => {
   const [loading, setLoading] = useState(false);
   const { notify } = useNotification();
   const { handleApiError } = useHandleApiError();
 
-  const postData = useCallback(
-    async ({ formData }) => {
+  const deleteData = useCallback(
+    async (id) => {
       setLoading(true);
 
       try {
-        const { data } = await api.post(endpoint, formData, {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const { data } = await api.delete(`${endpoint}/${id}`);
 
         refetch();
-        reset();
         notify({
           type: "success",
           title,
-          message: data.message,
+          message: data?.message || `${title} berhasil dihapus`,
         });
       } catch (error) {
         handleApiError({ error, title });
@@ -33,10 +27,10 @@ const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
         setLoading(false);
       }
     },
-    [endpoint, title, notify, refetch, reset, handleApiError]
+    [endpoint, handleApiError, notify, refetch, title]
   );
 
-  return { postData, loading };
+  return { deleteData, loading };
 };
 
-export default usePost;
+export default useDelete;

@@ -5,8 +5,21 @@ const useHandleApiError = () => {
   const { notify } = useNotification();
 
   const handleApiError = useCallback(
-    ({ error, title = "", setLoading = null }) => {
+    ({ error, title = "", setLoading = () => {}, silent401 = false }) => {
       if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
+        return;
+      }
+
+      setLoading(false);
+
+      if (error?.response?.status === 401) {
+        if (!silent401) {
+          notify({
+            type: "error",
+            title,
+            message: "Sesi Anda telah habis. Silahkan login kembali",
+          });
+        }
         return;
       }
 
@@ -14,12 +27,10 @@ const useHandleApiError = () => {
         type: "error",
         title,
         message:
-          error?.response?.data?.message ||
           error?.message ||
-          "Internal Server Error",
+          error?.response?.data?.message ||
+          "Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.",
       });
-
-      if (setLoading) setLoading(false);
     },
     [notify]
   );

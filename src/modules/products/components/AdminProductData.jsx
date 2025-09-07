@@ -1,14 +1,20 @@
 import { Button, Space } from "antd";
 import DataTable from "../../../components/DataTable";
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
+import useGets from "../../../hooks/useGets";
+import ProductModal from "./ProductModal";
+import { ButtonDelete } from "../../../components/Buttons";
 
-const AdminProductData = ({
-  itemDatas,
-  params,
-  setParams,
-  loading,
-  isFetched,
-}) => {
+const AdminProductData = ({ openModalAdd, setOpenModalAdd }) => {
+  const { data, loading, isFetched, refetch, setParams } = useGets({
+    endpoint: "produk",
+    name: "Produk",
+    initialParams: {
+      page: 1,
+      limit: 10,
+    },
+  });
+
   const columns = [
     {
       align: "center",
@@ -18,7 +24,12 @@ const AdminProductData = ({
       title: "Aksi",
       render: (val, row) => (
         <Space>
-          <Button color="danger" variant="outlined" icon={<DeleteOutlined />} />
+          <ButtonDelete
+            id={row.id}
+            refetch={refetch}
+            endpoint={"produk"}
+            title={"Produk"}
+          />
           <Button color="green" variant="outlined" icon={<EyeOutlined />} />
         </Space>
       ),
@@ -55,14 +66,22 @@ const AdminProductData = ({
   ];
 
   return (
-    <DataTable
-      columns={columns}
-      datas={itemDatas}
-      loading={loading || !isFetched}
-      params={params}
-      setParams={setParams}
-      size={"small"}
-    />
+    <>
+      <DataTable
+        columns={columns}
+        datas={data?.produks || []}
+        loading={loading || !isFetched}
+        params={data?.pagination}
+        setParams={setParams}
+        size={"small"}
+      />
+
+      <ProductModal
+        open={openModalAdd}
+        setOpen={setOpenModalAdd}
+        refetch={refetch}
+      />
+    </>
   );
 };
 
