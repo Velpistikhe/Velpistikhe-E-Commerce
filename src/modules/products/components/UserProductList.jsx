@@ -1,12 +1,14 @@
 import { Card, Row, Col, theme } from "antd";
 import useGets from "../../../hooks/useGets";
 import Loading from "../../../components/Loading";
+import { useNavigate } from "react-router";
 
 const UserProductList = () => {
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
   const { data, loading } = useGets({ endpoint: "produk" });
+  const navigate = useNavigate();
 
   if (loading) return <Loading />;
 
@@ -17,6 +19,7 @@ const UserProductList = () => {
           <Col xs={12} sm={12} md={12} lg={4} key={key}>
             <Card
               hoverable
+              onClick={() => navigate(`product/${product.id}`)}
               cover={
                 <div style={{ height: "200px", overflow: "hidden" }}>
                   <img

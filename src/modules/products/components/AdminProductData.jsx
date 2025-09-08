@@ -1,4 +1,4 @@
-import { Button, Space } from "antd";
+import { Button, Space, Tooltip, Typography } from "antd";
 import DataTable from "../../../components/DataTable";
 import { EyeOutlined } from "@ant-design/icons";
 import useGets from "../../../hooks/useGets";
@@ -51,17 +51,37 @@ const AdminProductData = ({ openModalAdd, setOpenModalAdd }) => {
     },
     {
       align: "left",
-      filter: true,
-      sorter: true,
       key: "spesifikasi",
       title: "Spesifikasi",
+      width: 300,
+      render: (val) => (
+        <Tooltip title={val}>
+          <Typography.Paragraph
+            ellipsis={{
+              rows: 2,
+            }}
+          >
+            {val}
+          </Typography.Paragraph>
+        </Tooltip>
+      ),
     },
     {
       align: "left",
-      filter: true,
-      sorter: true,
       key: "deskripsi",
       title: "Deskripsi",
+      width: 300,
+      render: (val) => (
+        <Tooltip title={val}>
+          <Typography.Paragraph
+            ellipsis={{
+              rows: 2,
+            }}
+          >
+            {val}
+          </Typography.Paragraph>
+        </Tooltip>
+      ),
     },
   ];
 

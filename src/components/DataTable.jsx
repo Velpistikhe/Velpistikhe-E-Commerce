@@ -11,67 +11,70 @@ const DataTable = ({ columns, datas, loading, params, setParams, size }) => {
   const handleReset = (clearFilters) => {
     clearFilters();
   };
-  const filterProps = (dataIndex) => ({
-    filterDropdown: ({
-      selectedKeys,
-      setSelectedKeys,
-      clearFilters,
-      confirm,
-    }) => (
-      <div
-        style={{
-          padding: 8,
-        }}
-        onKeyDown={(e) => e.stopPropagation()}
-      >
-        <Input
-          id={dataIndex.toLowerCase()}
-          name={dataIndex.toLowerCase()}
-          ref={searchInput}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() => handleSearch(confirm)}
+  const filterProps = (dataIndex, filter) =>
+    filter && {
+      filterDropdown: ({
+        selectedKeys,
+        setSelectedKeys,
+        clearFilters,
+        confirm,
+      }) => (
+        <div
           style={{
-            marginBottom: 8,
-            display: "block",
+            padding: 8,
           }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(confirm)}
-            icon={<SearchOutlined />}
-            size="small"
+          onKeyDown={(e) => e.stopPropagation()}
+        >
+          <Input
+            id={dataIndex.toLowerCase()}
+            name={dataIndex.toLowerCase()}
+            ref={searchInput}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() => handleSearch(confirm)}
             style={{
-              width: 90,
+              marginBottom: 8,
+              display: "block",
             }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{
-              width: 90,
-            }}
-          >
-            Reset
-          </Button>
-        </Space>
-      </div>
-    ),
-  });
+          />
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => handleSearch(confirm)}
+              icon={<SearchOutlined />}
+              size="small"
+              style={{
+                width: 90,
+              }}
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => clearFilters && handleReset(clearFilters)}
+              size="small"
+              style={{
+                width: 90,
+              }}
+            >
+              Reset
+            </Button>
+          </Space>
+        </div>
+      ),
+    };
 
   const newColumns = columns.map((col) => {
     return {
+      ...filterProps(col.key, col.filter),
       align: col.align,
-      ...filterProps(col.key),
-      sorter: col.sorter,
       dataIndex: col.key,
-      title: col.title,
+      ellipsis: col.ellipsis,
       render: col.render,
+      sorter: col.sorter,
+      title: col.title,
+      width: col.width,
     };
   });
 
@@ -107,7 +110,9 @@ const DataTable = ({ columns, datas, loading, params, setParams, size }) => {
       onChange={handleOnChange}
       pagination={{ current: params?.current, total: params?.total }}
       scroll={{ x: true }}
-      style={{ marginTop: 20 }}
+      style={{
+        marginTop: 20,
+      }}
       size={size}
     />
   );

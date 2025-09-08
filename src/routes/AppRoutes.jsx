@@ -13,6 +13,7 @@ import Layouts from "../components/Layouts";
 import Dashboard from "../modules/dashboard/pages/Dashboard";
 import StaffRoute from "./StaffRoute";
 import AdminProducts from "../modules/products/pages/AdminProducts";
+import Product from "../modules/products/pages/Product";
 
 const AppRoutes = ({ darkMode, setDarkMode }) => {
   const { loading } = useAuth();
@@ -30,6 +31,7 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
         element={<UserLayout darkMode={darkMode} setDarkMode={setDarkMode} />}
       >
         <Route index element={<Home />} />
+        <Route path="/product/:id" element={<Product />} />
         <Route element={<AuthRoute />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -38,6 +40,9 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
       </Route>
 
       <Route element={<ProtectedRoute />}>
+        <Route
+          element={<UserLayout darkMode={darkMode} setDarkMode={setDarkMode} />}
+        ></Route>
         <Route path="/admin" element={<StaffRoute />}>
           <Route
             element={<Layouts darkMode={darkMode} setDarkMode={setDarkMode} />}
