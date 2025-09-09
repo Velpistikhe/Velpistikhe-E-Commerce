@@ -1,4 +1,4 @@
-import { Card, theme, Flex, Image } from "antd";
+import { Card, theme, Flex } from "antd";
 import useGets from "../../../hooks/useGets";
 import Loading from "../../../components/Loading";
 import { useNavigate } from "react-router";
