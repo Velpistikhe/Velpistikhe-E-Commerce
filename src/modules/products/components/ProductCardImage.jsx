@@ -58,7 +58,7 @@ const ProductCardImage = ({ data }) => {
           slidesToScroll={1}
           arrows={false}
         >
-          {data?.produk.image.slice(0, 3).map((img, idx) => (
+          {data?.produk.image.map((img, idx) => (
             <Col span={8} key={idx}>
               <Image
                 crossOrigin="anonymous"
