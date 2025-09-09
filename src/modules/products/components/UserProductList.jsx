@@ -21,7 +21,7 @@ const UserProductList = () => {
           onClick={() => navigate(`product/${product.id}`)}
           cover={
             <div style={{}}>
-              <Image
+              {/* <Image
                 preview={false}
                 alt={product.nama}
                 crossOrigin="anonymous"
@@ -31,7 +31,7 @@ const UserProductList = () => {
                   objectFit: "cover",
                 }}
                 width={300}
-              />
+              /> */}
             </div>
           }
           style={{
