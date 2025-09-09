@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router";
 import {
   Badge,
   Flex,
+  Grid,
   Input,
   Layout,
   Space,
@@ -28,6 +29,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const navigate = useNavigate();
+  const screens = Grid.useBreakpoint();
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -36,34 +38,51 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
           alignContent: "center",
           backgroundColor: colorBgContainer,
           padding: "0 16px",
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
         }}
       >
         <Flex
-          style={{ cursor: "pointer", margin: "auto", width: "80vw" }}
+          style={{
+            margin: "auto",
+            width: "98%",
+          }}
           align="center"
+          gap="small"
           justify="space-between"
         >
-          <Flex onClick={() => navigate("/")}>
-            <img
-              style={{
-                backgroundColor: "black",
-                height: 37,
-                width: 37,
-                borderRadius: "100%",
-                padding: 5,
-                margin: "0 7px",
-              }}
-              src={logo}
-              alt="logo"
-            />
-            <Title level={3} style={{ margin: 0 }}>
-              Velpistikhe E-Shop
-            </Title>
-          </Flex>
+          {!screens.xs && (
+            <Flex style={{}}>
+              <img
+                onClick={() => navigate("/")}
+                style={{
+                  cursor: "pointer",
+                  backgroundColor: "black",
+                  height: 37,
+                  width: 37,
+                  borderRadius: "100%",
+                  padding: 5,
+                  margin: "0 7px",
+                }}
+                src={logo}
+                alt="logo"
+              />
+              <Title
+                onClick={() => navigate("/")}
+                level={3}
+                style={{ margin: 0, cursor: "pointer" }}
+              >
+                Velpistikhe E-Shop
+              </Title>
+            </Flex>
+          )}
 
-          <Input style={{ width: "50%" }} />
+          <div style={{ flex: 5 }}>
+            <Input />
+          </div>
 
-          <Flex align="center">
+          <Flex align="center" justify="right" style={{ flex: 1 }}>
             <Badge>
               <ShoppingCartOutlined
                 style={{
@@ -96,14 +115,21 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
       </Content>
 
       <Footer style={{ textAlign: "center" }}>
-        <Space size="large">
-          <GithubOutlined style={{ fontSize: "20px" }} />
-          <InstagramOutlined style={{ fontSize: "20px" }} />
-          <FacebookOutlined style={{ fontSize: "20px" }} />
-        </Space>
-        <Typography.Text type="secondary" style={{ marginLeft: 8 }}>
-          © {new Date().getFullYear()} Velpistikhe E-Shop. All Rights Reserved.
-        </Typography.Text>
+        <Flex justify="center" align="center" wrap="wrap" gap="small">
+          <Space size="middle">
+            <GithubOutlined style={{ fontSize: "20px" }} />
+            <InstagramOutlined style={{ fontSize: "20px" }} />
+            <FacebookOutlined style={{ fontSize: "20px" }} />
+          </Space>
+          <Typography.Text type="secondary">
+            <Flex gap="small" wrap="wrap" justify="center">
+              <p style={{ margin: 0, padding: 0 }}>
+                © {new Date().getFullYear()} Velpistikhe E-Shop.
+              </p>
+              <p style={{ margin: 0, padding: 0 }}>All Rights Reserved.</p>
+            </Flex>
+          </Typography.Text>
+        </Flex>
       </Footer>
     </Layout>
   );

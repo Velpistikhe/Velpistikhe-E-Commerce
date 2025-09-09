@@ -37,7 +37,7 @@ const Product = () => {
 
   return (
     <>
-      <Flex justify="space-between" gap={"large"}>
+      <Flex justify="space-between" gap="small" wrap="wrap">
         <ProductCardImage data={data} />
 
         {data?.produk && <ProductDescription data={data} />}

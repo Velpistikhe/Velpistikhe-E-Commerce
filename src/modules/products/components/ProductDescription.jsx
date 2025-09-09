@@ -18,12 +18,14 @@ const ProductDescription = ({ data }) => {
       key: "spesifikasi",
       label: "Spesifikasi",
       labelStyle: { width: 100 },
+      contentStyle: { whiteSpace: "pre-line" },
       children: data?.produk.spesifikasi,
     },
     {
       key: "deskripsi",
       label: "Deskripsi",
       labelStyle: { width: 100 },
+      contentStyle: { whiteSpace: "pre-line" },
       children: data?.produk.deskripsi,
     },
   ];
@@ -34,7 +36,7 @@ const ProductDescription = ({ data }) => {
       column={1}
       items={items}
       title={data?.produk?.nama}
-      style={{ width: "50%" }}
+      style={{ flex: 2, width: "100%" }}
     />
   );
 };

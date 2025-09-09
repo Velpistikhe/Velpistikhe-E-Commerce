@@ -43,11 +43,14 @@ const ProductOrderPanel = ({ orderDetail, onChange }) => {
       items={items1}
       title="Detil Pesanan"
       style={{
+        flex: 1,
         border: `solid 1px ${colorBorder}`,
         borderRadius: borderRadiusLG,
         height: 300,
         padding: 20,
-        width: "25%",
+        marginTop: 44,
+        position: "sticky",
+        top: 80,
       }}
     />
   );
