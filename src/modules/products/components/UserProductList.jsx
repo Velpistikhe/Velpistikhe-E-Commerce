@@ -1,4 +1,4 @@
-import { Card, theme, Flex } from "antd";
+import { Card, theme, Flex, Image } from "antd";
 import useGets from "../../../hooks/useGets";
 import Loading from "../../../components/Loading";
 import { useNavigate } from "react-router";
@@ -21,7 +21,7 @@ const UserProductList = () => {
           onClick={() => navigate(`product/${product.id}`)}
           cover={
             <div style={{}}>
-              {/* <Image
+              <Image
                 preview={false}
                 alt={product.nama}
                 crossOrigin="anonymous"
@@ -31,7 +31,7 @@ const UserProductList = () => {
                   objectFit: "cover",
                 }}
                 width={300}
-              /> */}
+              />
             </div>
           }
           style={{
