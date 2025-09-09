@@ -12,12 +12,15 @@ const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
     async ({ formData }) => {
       setLoading(true);
 
+      const params = { category: title.toLowerCase() };
+
       try {
         const { data } = await api.post(endpoint, formData, {
           withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
           },
+          params,
         });
 
         refetch();
