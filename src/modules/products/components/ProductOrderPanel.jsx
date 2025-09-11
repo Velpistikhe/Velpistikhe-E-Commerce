@@ -42,12 +42,13 @@ const ProductOrderPanel = ({ orderDetail, onChange }) => {
   ];
 
   useEffect(() => {
-    if (screens.xl || screens.md || screens.xxl)
+    if (!screens.xs)
       return setStyleDescription({
         flex: 1,
         border: `solid 1px ${colorBorder}`,
         borderRadius: borderRadiusLG,
         height: 300,
+        width: 300,
         padding: 20,
         marginTop: 44,
         position: "sticky",

@@ -4,20 +4,20 @@ import { useEffect, useState } from "react";
 
 const Register = () => {
   const screen = Grid.useBreakpoint();
-  const [divStyle, setDivStyle] = useState({ width: "100%" });
+  const [divStyle, setDivStyle] = useState({ width: 350 });
   const {
     token: { colorBorder, borderRadiusLG },
   } = theme.useToken();
 
   useEffect(() => {
-    if (screen.sm) {
+    if (screen.xs) {
       return setDivStyle({
-        width: 350,
+        width: "100%",
       });
     }
 
     return setDivStyle({
-      width: "100%",
+      width: 350,
     });
   }, [screen]);
 
