@@ -17,10 +17,10 @@ const usePost = ({ endpoint, title, refetch = () => {}, reset = () => {} }) => {
       try {
         const { data } = await api.post(endpoint, formData, {
           withCredentials: true,
-          headers: {
+          headers: title === "Produk" && {
             "Content-Type": "multipart/form-data",
           },
-          params,
+          params: title === "Produk" && params,
         });
 
         refetch();

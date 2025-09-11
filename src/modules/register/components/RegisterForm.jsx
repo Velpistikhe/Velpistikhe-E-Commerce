@@ -1,6 +1,7 @@
-import { Button, Form, Input } from "antd";
+import { Flex, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router";
 import usePost from "../../../hooks/usePost";
+import { ButtonSubmit } from "../../../components/Buttons";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -11,16 +12,12 @@ const RegisterForm = () => {
   });
 
   const onFinish = (values) => {
-    postData({ data: values });
+    postData({ formData: values });
   };
 
   return (
     <>
-      <Form
-        onFinish={onFinish}
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 16 }}
-      >
+      <Form onFinish={onFinish} labelCol={{ span: 9 }} labelAlign="left">
         <Form.Item
           label={"Username"}
           name={"username"}
@@ -42,16 +39,11 @@ const RegisterForm = () => {
         >
           <Input.Password />
         </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={loading}
-            loading={loading}
-          >
+        <Flex justify="right">
+          <ButtonSubmit disable={loading} loading={loading}>
             Daftar
-          </Button>
-        </Form.Item>
+          </ButtonSubmit>
+        </Flex>
       </Form>
       <p>
         Punya akun? <Link to={"/login"}>Masuk</Link>

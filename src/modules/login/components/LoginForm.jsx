@@ -1,6 +1,7 @@
-import { Button, Flex, Form, Input } from "antd";
+import { Flex, Form, Input } from "antd";
 import { useAuth } from "../../../context/AuthContext";
 import { useRef } from "react";
+import { ButtonSubmit } from "../../../components/Buttons";
 
 const LoginForm = () => {
   const { login, loading } = useAuth();
@@ -18,7 +19,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Form onFinish={onFinish}>
+    <Form onFinish={onFinish} labelCol={{ span: 10 }} labelAlign="left">
       <Form.Item
         label={"Username"}
         name={"username"}
@@ -34,15 +35,9 @@ const LoginForm = () => {
         <Input.Password />
       </Form.Item>
       <Flex justify="right">
-        <Button
-          htmlType="submit"
-          variant="outlined"
-          color="primary"
-          disabled={loading}
-          loading={loading}
-        >
+        <ButtonSubmit disable={loading} loading={loading}>
           Login
-        </Button>
+        </ButtonSubmit>
       </Flex>
     </Form>
   );

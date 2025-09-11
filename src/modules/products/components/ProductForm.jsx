@@ -1,4 +1,4 @@
-import { Form, Input, Select, theme, Upload } from "antd";
+import { Flex, Form, Input, Select, theme, Upload } from "antd";
 import InputAngka from "../../../components/InputAngka";
 import { ButtonSubmit } from "../../../components/Buttons";
 import TextArea from "antd/es/input/TextArea";
@@ -106,9 +106,11 @@ const ProductForm = ({ method, loading }) => {
           {uploadButton}
         </Upload>
       </Form.Item>
-      <Form.Item label={null}>
-        <ButtonSubmit loading={loading} disable={loading} />
-      </Form.Item>
+      <Flex justify="right">
+        <ButtonSubmit disable={loading} loading={loading}>
+          Daftar
+        </ButtonSubmit>
+      </Flex>
     </Form>
   );
 };

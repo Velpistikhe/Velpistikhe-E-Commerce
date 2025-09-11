@@ -15,7 +15,7 @@ export const ButtonAddModal = ({ setOpen }) => {
   );
 };
 
-export const ButtonSubmit = ({ disable, loading }) => {
+export const ButtonSubmit = ({ disable, loading, children }) => {
   return (
     <Button
       color="primary"
@@ -24,7 +24,7 @@ export const ButtonSubmit = ({ disable, loading }) => {
       loading={loading}
       variant="solid"
     >
-      Simpan
+      {children}
     </Button>
   );
 };

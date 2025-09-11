@@ -1,21 +1,40 @@
-import { Layout, theme } from "antd";
-import { Content } from "antd/es/layout/layout";
+import { Grid, theme } from "antd";
 import RegisterForm from "../components/RegisterForm";
+import { useEffect, useState } from "react";
 
 const Register = () => {
+  const screen = Grid.useBreakpoint();
+  const [divStyle, setDivStyle] = useState({ width: "100%" });
   const {
-    token: { colorBgContainer },
+    token: { colorBorder, borderRadiusLG },
   } = theme.useToken();
 
+  useEffect(() => {
+    if (screen.sm) {
+      return setDivStyle({
+        width: 350,
+      });
+    }
+
+    return setDivStyle({
+      width: "100%",
+    });
+  }, [screen]);
+
   return (
-    <>
-      <Layout style={{ minHeight: "100vh", backgroundColor: colorBgContainer }}>
-        <Content>
-          <h1>Registrasi</h1>
-          <RegisterForm />
-        </Content>
-      </Layout>
-    </>
+    <div
+      style={{
+        ...divStyle,
+        border: "solid 1px",
+        borderColor: colorBorder,
+        borderRadius: borderRadiusLG,
+        margin: "auto",
+        padding: 24,
+      }}
+    >
+      <h1>Registrasi</h1>
+      <RegisterForm />
+    </div>
   );
 };
 
