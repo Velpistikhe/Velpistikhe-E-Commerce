@@ -14,6 +14,7 @@ import Dashboard from "../modules/dashboard/pages/Dashboard";
 import StaffRoute from "./StaffRoute";
 import AdminProducts from "../modules/products/pages/AdminProducts";
 import Product from "../modules/products/pages/Product";
+import Cart from "../modules/userCart/pages/Cart";
 
 const AppRoutes = ({ darkMode, setDarkMode }) => {
   const { loading } = useAuth();
@@ -42,7 +43,9 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
       <Route element={<ProtectedRoute />}>
         <Route
           element={<UserLayout darkMode={darkMode} setDarkMode={setDarkMode} />}
-        ></Route>
+        >
+          <Route path="/user/cart/:id" element={<Cart />} />
+        </Route>
         <Route path="/admin" element={<StaffRoute />}>
           <Route
             element={<Layouts darkMode={darkMode} setDarkMode={setDarkMode} />}

@@ -22,16 +22,33 @@ import {
 import UserMenu from "./UserMenu";
 import logo from "../logo.png";
 import { ButtonBackUrl } from "./Buttons";
+import { useAuth } from "../context/AuthContext";
+import { useNotification } from "../context/NotificationContext";
 
 const { Header, Content, Footer } = Layout;
 
 const UserLayout = ({ darkMode, setDarkMode }) => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const screens = Grid.useBreakpoint();
   const location = useLocation();
+  const { notify } = useNotification();
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  const handleClickCart = () => {
+    if (user && user.role !== "Admin" && user.role !== "Staff") {
+      return navigate(`/user/cart/${user.id}`);
+    }
+
+    notify({
+      type: "warning",
+      title: "Cart",
+      message: "Silahkan Login terlebih dahulu",
+    });
+    return navigate("/login");
+  };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -104,14 +121,17 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
           </div>
 
           <Flex align="center" justify="right" style={{ flex: 1 }}>
-            <Badge>
-              <ShoppingCartOutlined
-                style={{
-                  cursor: "pointer",
-                  fontSize: 24,
-                }}
-              />
-            </Badge>
+            {user?.role !== "Admin" && user?.role !== "Staff" && (
+              <Badge>
+                <ShoppingCartOutlined
+                  style={{
+                    cursor: "pointer",
+                    fontSize: 24,
+                  }}
+                  onClick={handleClickCart}
+                />
+              </Badge>
+            )}
             <UserMenu />
 
             <Switch
