@@ -20,7 +20,7 @@ const LoginForm = () => {
   return (
     <Form onFinish={onFinish}>
       <Form.Item
-        label={"username"}
+        label={"Username"}
         name={"username"}
         rules={[{ required: true, message: "Username kosong" }]}
       >

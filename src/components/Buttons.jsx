@@ -1,6 +1,7 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Popconfirm } from "antd";
 import useDelete from "../hooks/useDelete";
+import { useNavigate } from "react-router";
 
 export const ButtonAddModal = ({ setOpen }) => {
   const onClickHandler = () => {
@@ -55,5 +56,17 @@ export const ButtonDelete = ({ id, endpoint, title, refetch }) => {
         variant="outlined"
       />
     </Popconfirm>
+  );
+};
+
+export const ButtonBackUrl = () => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate(-1);
+  };
+
+  return (
+    <Button variant="outlined" icon={<ArrowLeftOutlined />} onClick={onClick} />
   );
 };

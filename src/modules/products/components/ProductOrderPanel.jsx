@@ -1,10 +1,14 @@
-import { Button, Descriptions, Flex, Space, theme } from "antd";
+import { Button, Descriptions, Flex, Grid, Space, theme } from "antd";
 import CounterInput from "../../../components/CounterInput";
+import { useEffect, useState } from "react";
 
 const ProductOrderPanel = ({ orderDetail, onChange }) => {
+  const screens = Grid.useBreakpoint();
   const {
-    token: { colorBorder, borderRadiusLG },
+    token: { colorBgContainer, colorBorder, borderRadiusLG },
   } = theme.useToken();
+  const [styleDescription, setStyleDescription] = useState(null);
+
   const items1 = [
     {
       key: "jumlah",
@@ -37,12 +41,9 @@ const ProductOrderPanel = ({ orderDetail, onChange }) => {
     },
   ];
 
-  return (
-    <Descriptions
-      column={1}
-      items={items1}
-      title="Detil Pesanan"
-      style={{
+  useEffect(() => {
+    if (screens.xl || screens.md || screens.xxl)
+      return setStyleDescription({
         flex: 1,
         border: `solid 1px ${colorBorder}`,
         borderRadius: borderRadiusLG,
@@ -51,7 +52,25 @@ const ProductOrderPanel = ({ orderDetail, onChange }) => {
         marginTop: 44,
         position: "sticky",
         top: 80,
-      }}
+      });
+
+    if (screens.xs)
+      return setStyleDescription({
+        bottom: 0,
+        border: `solid 1px ${colorBorder}`,
+        borderRadius: borderRadiusLG,
+        padding: 20,
+        position: "sticky",
+        backgroundColor: colorBgContainer,
+      });
+  }, [screens, borderRadiusLG, colorBorder, colorBgContainer]);
+
+  return (
+    <Descriptions
+      column={1}
+      items={items1}
+      title="Detil Pesanan"
+      style={styleDescription}
     />
   );
 };

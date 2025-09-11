@@ -52,7 +52,7 @@ const UserMenu = () => {
       ];
 
   const content = (
-    <div style={{ padding: 16 }}>
+    <div>
       {user && (
         <div
           style={{ display: "flex", alignItems: "center", marginBottom: 12 }}

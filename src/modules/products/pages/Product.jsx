@@ -1,13 +1,15 @@
 import { useParams } from "react-router";
-import { Flex } from "antd";
+import { Flex, Grid, Space } from "antd";
 import useGet from "../../../hooks/useGet";
 import Loading from "../../../components/Loading";
 import ProductCardImage from "../components/ProductCardImage";
 import { useEffect, useState } from "react";
 import ProductDescription from "../components/ProductDescription";
 import ProductOrderPanel from "../components/ProductOrderPanel";
+import { ButtonBackUrl } from "../../../components/Buttons";
 
 const Product = () => {
+  const screens = Grid.useBreakpoint();
   const { id } = useParams();
   const { data, loading, isFetched } = useGet({
     id,
@@ -37,13 +39,21 @@ const Product = () => {
 
   return (
     <>
-      <Flex justify="space-between" gap="small" wrap="wrap">
-        <ProductCardImage data={data} />
+      <Space align="top" gap={"small"}>
+        {!screens.xs && <ButtonBackUrl />}
+        <Flex
+          justify="space-between"
+          gap="large"
+          wrap="wrap"
+          style={{ margin: "0 auto" }}
+        >
+          <ProductCardImage data={data} />
 
-        {data?.produk && <ProductDescription data={data} />}
+          {data?.produk && <ProductDescription data={data} />}
 
-        <ProductOrderPanel orderDetail={orderDetail} onChange={onChange} />
-      </Flex>
+          <ProductOrderPanel orderDetail={orderDetail} onChange={onChange} />
+        </Flex>
+      </Space>
     </>
   );
 };

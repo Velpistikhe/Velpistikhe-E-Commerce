@@ -35,7 +35,11 @@ const ProductDescription = ({ data }) => {
       bordered
       column={1}
       items={items}
-      title={data?.produk?.nama}
+      title={
+        <div style={{ whiteSpace: "normal", wordBreak: "break-word" }}>
+          {data?.produk?.nama}
+        </div>
+      }
       style={{ flex: 2, width: "100%" }}
     />
   );

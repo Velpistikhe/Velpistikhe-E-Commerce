@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import {
   Badge,
   Flex,
@@ -21,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import UserMenu from "./UserMenu";
 import logo from "../logo.png";
+import { ButtonBackUrl } from "./Buttons";
 
 const { Header, Content, Footer } = Layout;
 
@@ -30,6 +31,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
   } = theme.useToken();
   const navigate = useNavigate();
   const screens = Grid.useBreakpoint();
+  const location = useLocation();
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -52,6 +54,25 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
           gap="small"
           justify="space-between"
         >
+          {screens.xs && location.pathname.includes("/product") && (
+            <ButtonBackUrl />
+          )}
+          {screens.xs && !location.pathname.includes("/product") && (
+            <img
+              onClick={() => navigate("/")}
+              style={{
+                cursor: "pointer",
+                backgroundColor: "black",
+                height: 37,
+                width: 37,
+                borderRadius: "100%",
+                padding: 5,
+                margin: "0 7px",
+              }}
+              src={logo}
+              alt="logo"
+            />
+          )}
           {!screens.xs && (
             <Flex style={{}}>
               <img
