@@ -1,15 +1,26 @@
-import { Modal } from "antd";
+import { Button, Modal } from "antd";
 import LoginForm from "./LoginForm";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { closeLoginModal } from "../authSlice";
 
-const LoginModal = ({ open, setOpen }) => {
+const LoginModal = () => {
+  const { loginModal } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const onCancel = () => {
-    setOpen(false);
+    dispatch(closeLoginModal());
+  };
+
+  const handleRegister = () => {
+    dispatch(closeLoginModal());
+    navigate("/register");
   };
 
   return (
     <Modal
-      open={open}
+      open={loginModal}
       onCancel={onCancel}
       destroyOnHidden={true}
       footer={false}
@@ -17,7 +28,10 @@ const LoginModal = ({ open, setOpen }) => {
       <h1>Login</h1>
       <LoginForm setOpen={onCancel} />
       <p>
-        Belum Punya Akun? <Link to={"/register"}>Buat Akun</Link>
+        Belum Punya Akun?{" "}
+        <Button color="primary" variant="link" onClick={handleRegister}>
+          Daftar
+        </Button>
       </p>
     </Modal>
   );

@@ -2,14 +2,22 @@ import { Button, Grid, theme } from "antd";
 import LoginForm from "../components/LoginForm";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { closeLoginModal } from "../authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispacth = useDispatch();
   const screen = Grid.useBreakpoint();
   const [divStyle, setDivStyle] = useState({ width: 350 });
   const {
     token: { colorBorder, borderRadiusLG },
   } = theme.useToken();
+
+  const handleClickRegister = () => {
+    dispacth(closeLoginModal());
+    navigate("/register");
+  };
 
   useEffect(() => {
     if (screen.xs) {
@@ -38,11 +46,7 @@ const Login = () => {
       <LoginForm navigate={navigate} />
       <p>
         Belum Punya Akun?{" "}
-        <Button
-          color="primary"
-          variant="link"
-          onClick={() => navigate("/register")}
-        >
+        <Button color="primary" variant="link" onClick={handleClickRegister}>
           Daftar
         </Button>
       </p>

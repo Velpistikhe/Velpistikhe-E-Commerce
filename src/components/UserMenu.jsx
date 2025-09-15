@@ -2,17 +2,16 @@ import { Avatar, Flex, Menu, Popover, theme } from "antd";
 import {
   UserOutlined,
   LogoutOutlined,
-  LoginOutlined,
   ProfileOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../modules/login/authSlice";
+import { logout, openLoginModal } from "../modules/login/authSlice";
 import { useNotification } from "../context/NotificationContext";
 import useHandleApiError from "../hooks/useHandleApiError";
 
-const UserMenu = ({ setOpenLogin }) => {
+const UserMenu = () => {
   const dispacth = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
@@ -32,34 +31,25 @@ const UserMenu = ({ setOpenLogin }) => {
     }
   };
 
-  const items = user
-    ? [
-        user.role === "Staff" && {
-          key: "app",
-          label: "App Manager",
-          icon: <AppstoreOutlined />,
-          onClick: () => navigate("/admin/dashboard"),
-        },
-        user.role === "Guest" && {
-          key: "profile",
-          label: "Profile",
-          icon: <ProfileOutlined />,
-        },
-        {
-          key: "logout",
-          label: "Logout",
-          icon: <LogoutOutlined />,
-          onClick: () => handleLogout(),
-        },
-      ]
-    : [
-        {
-          key: "login",
-          label: "Login",
-          icon: <LoginOutlined />,
-          onClick: () => setOpenLogin(true),
-        },
-      ];
+  const items = user && [
+    user.role === "Staff" && {
+      key: "app",
+      label: "App Manager",
+      icon: <AppstoreOutlined />,
+      onClick: () => navigate("/admin/dashboard"),
+    },
+    user.role === "Guest" && {
+      key: "profile",
+      label: "Profile",
+      icon: <ProfileOutlined />,
+    },
+    {
+      key: "logout",
+      label: "Logout",
+      icon: <LogoutOutlined />,
+      onClick: () => handleLogout(),
+    },
+  ];
 
   const content = (
     <div>
@@ -96,7 +86,7 @@ const UserMenu = ({ setOpenLogin }) => {
         <Avatar
           icon={<UserOutlined />}
           size="default"
-          onClick={!user ? () => setOpenLogin(true) : null}
+          onClick={!user ? () => dispacth(openLoginModal()) : null}
         />
         {user?.nama && <span>{user?.nama}</span>}
       </Flex>

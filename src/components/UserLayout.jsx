@@ -22,17 +22,17 @@ import {
 import UserMenu from "./UserMenu";
 import logo from "../logo.png";
 import { ButtonBackUrl } from "./Buttons";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import LoginModal from "../modules/login/components/LoginModal";
+import { openLoginModal } from "../modules/login/authSlice";
 
 const { Header, Content, Footer } = Layout;
 
 const UserLayout = ({ darkMode, setDarkMode }) => {
   const { user } = useSelector((state) => state.auth);
   const { product } = useSelector((state) => state.cart);
-  const [openLogin, setOpenLogin] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const screens = Grid.useBreakpoint();
   const location = useLocation();
   const {
@@ -44,7 +44,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
       return navigate(`/user/cart/${user.id}`);
     }
 
-    setOpenLogin(true);
+    dispatch(openLoginModal());
   };
 
   return (
@@ -129,7 +129,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
                 />
               </Badge>
             )}
-            <UserMenu setOpenLogin={setOpenLogin} />
+            <UserMenu />
 
             <Switch
               checked={darkMode}
@@ -151,9 +151,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
         }}
       >
         <Outlet />
-        {location.pathname !== "/register" && (
-          <LoginModal open={openLogin} setOpen={setOpenLogin} />
-        )}
+        {location.pathname !== "/register" && <LoginModal />}
       </Content>
 
       <Footer style={{ textAlign: "center" }}>

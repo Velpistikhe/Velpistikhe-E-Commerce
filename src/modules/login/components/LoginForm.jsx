@@ -3,11 +3,12 @@ import { ButtonSubmit } from "../../../components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import useHandleApiError from "../../../hooks/useHandleApiError";
 import { useNotification } from "../../../context/NotificationContext";
-import { login } from "../authSlice";
+import { closeLoginModal, login } from "../authSlice";
 
-const LoginForm = ({ setOpen = () => null, navigate = () => null }) => {
+const LoginForm = ({ navigate = () => null }) => {
   const dispacth = useDispatch();
   const { loadingLogin } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const { handleApiError } = useHandleApiError();
   const { notify } = useNotification();
 
@@ -15,7 +16,7 @@ const LoginForm = ({ setOpen = () => null, navigate = () => null }) => {
     try {
       const message = await dispacth(login(credentials)).unwrap();
 
-      setOpen(false);
+      dispatch(closeLoginModal());
 
       notify({
         type: "success",

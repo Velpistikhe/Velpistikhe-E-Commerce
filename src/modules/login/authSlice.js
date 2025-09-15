@@ -6,6 +6,7 @@ const initialState = {
   loadingFetch: true,
   loadingLogin: false,
   loadingLogout: false,
+  loginModal: false,
   error: null,
   message: null,
 };
@@ -74,6 +75,12 @@ const authSlice = createSlice({
       state.error = null;
       state.message = null;
     },
+    openLoginModal(state) {
+      state.loginModal = true;
+    },
+    closeLoginModal(state) {
+      state.loginModal = false;
+    },
     resetAuth: () => initialState,
   },
   extraReducers(builder) {
@@ -118,6 +125,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthMessage, resetAuth } = authSlice.actions;
+export const { clearAuthMessage, resetAuth, openLoginModal, closeLoginModal } =
+  authSlice.actions;
 
 export default authSlice.reducer;
