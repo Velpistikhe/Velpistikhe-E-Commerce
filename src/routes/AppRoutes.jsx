@@ -25,11 +25,7 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
   );
 
   useEffect(() => {
-    const getProfile = async () => {
-      await dispatch(fetchProfile());
-    };
-
-    getProfile();
+    dispatch(fetchProfile());
   }, [dispatch]);
 
   if (loadingFetch || loadingLogin || loadingLogout)

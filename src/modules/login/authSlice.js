@@ -25,7 +25,7 @@ export const fetchProfile = createAsyncThunk(
     try {
       const { data } = await api.get("user/profile");
 
-      return data.user;
+      return data.user || null;
     } catch (error) {
       if (error.name === "CanceledError" || error.code === "ERR_CANCELED") {
         return;
@@ -83,11 +83,13 @@ const authSlice = createSlice({
       })
       .addCase(fetchProfile.fulfilled, (state, action) => {
         state.loadingFetch = false;
+        state.isAuthChecked = true;
         state.user = action.payload;
       })
       .addCase(fetchProfile.rejected, (state, action) => {
         state.loadingFetch = false;
         state.error = action.payload;
+        state.isAuthChecked = true;
         state.user = null;
       })
       .addCase(login.pending, (state) => {
