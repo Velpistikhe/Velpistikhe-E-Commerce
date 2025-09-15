@@ -18,6 +18,7 @@ export const NotificationProvider = ({ children }) => {
         message: title ?? "",
         description: message ?? "",
         placement: "topRight",
+        duration: 2,
       });
     },
     [api]
