@@ -22,13 +22,13 @@ import {
 import UserMenu from "./UserMenu";
 import logo from "../logo.png";
 import { ButtonBackUrl } from "./Buttons";
-import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
+import { useSelector } from "react-redux";
 
 const { Header, Content, Footer } = Layout;
 
 const UserLayout = ({ darkMode, setDarkMode }) => {
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const screens = Grid.useBreakpoint();
   const location = useLocation();
@@ -47,6 +47,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
       title: "Cart",
       message: "Silahkan Login terlebih dahulu",
     });
+
     return navigate("/login");
   };
 

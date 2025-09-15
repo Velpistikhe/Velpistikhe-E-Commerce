@@ -27,6 +27,7 @@ const useHandleApiError = () => {
         type: "error",
         title,
         message:
+          error ||
           error?.message ||
           error?.response?.data?.message ||
           "Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.",

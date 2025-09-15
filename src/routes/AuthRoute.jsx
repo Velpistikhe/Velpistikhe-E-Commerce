@@ -1,8 +1,8 @@
-import { useAuth } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router";
 
 const AuthRoute = () => {
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.auth);
 
   return user ? <Navigate to="/" /> : <Outlet />;
 };

@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router";
-import { useAuth } from "../context/AuthContext";
 import Loading from "../components/Loading";
 import SecondaryLayouts from "../components/SecondaryLayouts";
 import UserLayout from "../components/UserLayout";
@@ -15,11 +14,25 @@ import StaffRoute from "./StaffRoute";
 import AdminProducts from "../modules/products/pages/AdminProducts";
 import Product from "../modules/products/pages/Product";
 import Cart from "../modules/userCart/pages/Cart";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchProfile } from "../modules/login/authSlice";
 
 const AppRoutes = ({ darkMode, setDarkMode }) => {
-  const { loading } = useAuth();
+  const dispatch = useDispatch();
+  const { loadingFetch, loadingLogin, loadingLogout } = useSelector(
+    (state) => state.auth
+  );
 
-  if (loading)
+  useEffect(() => {
+    const getProfile = async () => {
+      await dispatch(fetchProfile());
+    };
+
+    getProfile();
+  }, [dispatch]);
+
+  if (loadingFetch || loadingLogin || loadingLogout)
     return (
       <SecondaryLayouts>
         <Loading />

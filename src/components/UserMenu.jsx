@@ -6,20 +6,32 @@ import {
   ProfileOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../modules/login/authSlice";
+import { useNotification } from "../context/NotificationContext";
+import useHandleApiError from "../hooks/useHandleApiError";
 
 const UserMenu = () => {
-  const { user, logout } = useAuth();
+  const { user } = useSelector((state) => state.auth);
+  const dispacth = useDispatch();
   const navigate = useNavigate();
+  const { notify } = useNotification();
+  const { handleApiError } = useHandleApiError();
   const {
     token: { borderRadiusLG },
   } = theme.useToken();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      const message = await dispacth(logout()).unwrap();
 
-    navigate("/");
+      navigate("/");
+
+      notify({ type: "success", title: "Logout", message });
+    } catch (error) {
+      handleApiError({ error, title: "Logout" });
+    }
   };
 
   const items = user

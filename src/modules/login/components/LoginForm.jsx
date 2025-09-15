@@ -1,20 +1,31 @@
 import { Flex, Form, Input } from "antd";
-import { useAuth } from "../../../context/AuthContext";
-import { useRef } from "react";
 import { ButtonSubmit } from "../../../components/Buttons";
+import { useDispatch, useSelector } from "react-redux";
+import useHandleApiError from "../../../hooks/useHandleApiError";
+import { useNavigate } from "react-router";
+import { useNotification } from "../../../context/NotificationContext";
+import { login } from "../authSlice";
 
 const LoginForm = () => {
-  const { login, loading } = useAuth();
-  const isSubmitting = useRef(false);
+  const navigate = useNavigate();
+  const dispacth = useDispatch();
+  const { loadingLogin } = useSelector((state) => state.auth);
+  const { handleApiError } = useHandleApiError();
+  const { notify } = useNotification();
 
-  const onFinish = (val) => {
-    if (isSubmitting.current) return;
-    isSubmitting.current = true;
-
+  const onFinish = async (credentials) => {
     try {
-      login(val);
-    } finally {
-      isSubmitting.current = false;
+      const message = await dispacth(login(credentials)).unwrap();
+
+      notify({
+        type: "success",
+        title: "Login",
+        message,
+      });
+
+      navigate("/");
+    } catch (error) {
+      handleApiError({ error, title: "Login" });
     }
   };
 
@@ -35,7 +46,7 @@ const LoginForm = () => {
         <Input.Password />
       </Form.Item>
       <Flex justify="right">
-        <ButtonSubmit disable={loading} loading={loading}>
+        <ButtonSubmit disable={loadingLogin} loading={loadingLogin}>
           Login
         </ButtonSubmit>
       </Flex>

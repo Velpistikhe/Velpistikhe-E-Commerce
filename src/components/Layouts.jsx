@@ -1,5 +1,8 @@
 import {
   DashboardOutlined,
+  FacebookOutlined,
+  GithubOutlined,
+  InstagramOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   MoonOutlined,
@@ -9,8 +12,17 @@ import {
   SunOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Flex, Layout, Menu, Space, Switch, theme } from "antd";
-import { Content, Header } from "antd/es/layout/layout";
+import {
+  Button,
+  Flex,
+  Layout,
+  Menu,
+  Space,
+  Switch,
+  theme,
+  Typography,
+} from "antd";
+import { Content, Footer, Header } from "antd/es/layout/layout";
 import Sider from "antd/es/layout/Sider";
 import { useCallback, useMemo } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
@@ -152,6 +164,23 @@ const Layouts = ({ darkMode, setDarkMode }) => {
         >
           <Outlet />
         </Content>
+        <Footer style={{ textAlign: "center" }}>
+          <Flex justify="center" align="center" wrap="wrap" gap="small">
+            <Space size="middle">
+              <GithubOutlined style={{ fontSize: "20px" }} />
+              <InstagramOutlined style={{ fontSize: "20px" }} />
+              <FacebookOutlined style={{ fontSize: "20px" }} />
+            </Space>
+            <Typography.Text type="secondary">
+              <Flex gap="small" wrap="wrap" justify="center">
+                <p style={{ margin: 0, padding: 0 }}>
+                  © {new Date().getFullYear()} Velpistikhe E-Shop.
+                </p>
+                <p style={{ margin: 0, padding: 0 }}>All Rights Reserved.</p>
+              </Flex>
+            </Typography.Text>
+          </Flex>
+        </Footer>
       </Layout>
     </Layout>
   );

@@ -1,11 +1,13 @@
 import "./App.css";
 import { BrowserRouter as Router } from "react-router";
 import AppRoutes from "./routes/AppRoutes";
-import { AuthContextProvider } from "./context/AuthContext";
 import { ConfigProvider } from "antd";
 import { NotificationProvider } from "./context/NotificationContext";
 import { darkTheme, lightTheme } from "./utils/themeConfig";
 import useThemeMode from "./hooks/useThemeMode";
+import { Provider } from "react-redux";
+import store from "./app/store";
+import ErrorBoundary from "antd/es/alert/ErrorBoundary";
 
 function App() {
   const [darkMode, setDarkMode] = useThemeMode();
@@ -13,15 +15,17 @@ function App() {
   const theme = darkMode ? darkTheme : lightTheme;
 
   return (
-    <Router>
-      <ConfigProvider theme={theme}>
-        <NotificationProvider>
-          <AuthContextProvider>
-            <AppRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
-          </AuthContextProvider>
-        </NotificationProvider>
-      </ConfigProvider>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <ConfigProvider theme={theme}>
+          <NotificationProvider>
+            <ErrorBoundary>
+              <AppRoutes darkMode={darkMode} setDarkMode={setDarkMode} />
+            </ErrorBoundary>
+          </NotificationProvider>
+        </ConfigProvider>
+      </Router>
+    </Provider>
   );
 }
 
