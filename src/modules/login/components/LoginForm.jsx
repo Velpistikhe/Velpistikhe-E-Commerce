@@ -2,12 +2,10 @@ import { Flex, Form, Input } from "antd";
 import { ButtonSubmit } from "../../../components/Buttons";
 import { useDispatch, useSelector } from "react-redux";
 import useHandleApiError from "../../../hooks/useHandleApiError";
-import { useNavigate } from "react-router";
 import { useNotification } from "../../../context/NotificationContext";
 import { login } from "../authSlice";
 
-const LoginForm = () => {
-  const navigate = useNavigate();
+const LoginForm = ({ setOpen = () => null, navigate = () => null }) => {
   const dispacth = useDispatch();
   const { loadingLogin } = useSelector((state) => state.auth);
   const { handleApiError } = useHandleApiError();
@@ -16,6 +14,8 @@ const LoginForm = () => {
   const onFinish = async (credentials) => {
     try {
       const message = await dispacth(login(credentials)).unwrap();
+
+      setOpen(false);
 
       notify({
         type: "success",

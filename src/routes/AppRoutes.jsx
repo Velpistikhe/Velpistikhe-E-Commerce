@@ -28,22 +28,21 @@ const AppRoutes = ({ darkMode, setDarkMode }) => {
     dispatch(fetchProfile());
   }, [dispatch]);
 
-  if (loadingFetch || loadingLogin || loadingLogout)
-    return (
-      <SecondaryLayouts>
-        <Loading />
-      </SecondaryLayouts>
-    );
+  if (loadingFetch || loadingLogin || loadingLogout) return <Loading />;
 
   return (
     <Routes>
+      <Route element={<SecondaryLayouts />}>
+        <Route element={<AuthRoute />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Route>
       <Route
         element={<UserLayout darkMode={darkMode} setDarkMode={setDarkMode} />}
       >
         <Route index element={<Home />} />
         <Route path="/product/:id" element={<Product />} />
         <Route element={<AuthRoute />}>
-          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
         <Route path="*" element={<NotFound />} />

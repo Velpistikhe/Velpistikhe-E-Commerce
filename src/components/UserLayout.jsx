@@ -22,17 +22,19 @@ import {
 import UserMenu from "./UserMenu";
 import logo from "../logo.png";
 import { ButtonBackUrl } from "./Buttons";
-import { useNotification } from "../context/NotificationContext";
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import LoginModal from "../modules/login/components/LoginModal";
 
 const { Header, Content, Footer } = Layout;
 
 const UserLayout = ({ darkMode, setDarkMode }) => {
   const { user } = useSelector((state) => state.auth);
+  const { product } = useSelector((state) => state.cart);
+  const [openLogin, setOpenLogin] = useState(false);
   const navigate = useNavigate();
   const screens = Grid.useBreakpoint();
   const location = useLocation();
-  const { notify } = useNotification();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -42,13 +44,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
       return navigate(`/user/cart/${user.id}`);
     }
 
-    notify({
-      type: "warning",
-      title: "Cart",
-      message: "Silahkan Login terlebih dahulu",
-    });
-
-    return navigate("/login");
+    setOpenLogin(true);
   };
 
   return (
@@ -92,7 +88,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
             />
           )}
           {!screens.xs && (
-            <Flex style={{}}>
+            <Flex>
               <img
                 onClick={() => navigate("/")}
                 style={{
@@ -123,7 +119,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
 
           <Flex align="center" justify="right" style={{ flex: 1 }}>
             {user?.role !== "Admin" && user?.role !== "Staff" && (
-              <Badge>
+              <Badge count={product.length}>
                 <ShoppingCartOutlined
                   style={{
                     cursor: "pointer",
@@ -133,7 +129,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
                 />
               </Badge>
             )}
-            <UserMenu />
+            <UserMenu setOpenLogin={setOpenLogin} />
 
             <Switch
               checked={darkMode}
@@ -147,6 +143,7 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
 
       <Content
         style={{
+          alignContent: "center",
           margin: "24px 16px",
           padding: 24,
           background: colorBgContainer,
@@ -154,6 +151,9 @@ const UserLayout = ({ darkMode, setDarkMode }) => {
         }}
       >
         <Outlet />
+        {location.pathname !== "/register" && (
+          <LoginModal open={openLogin} setOpen={setOpenLogin} />
+        )}
       </Content>
 
       <Footer style={{ textAlign: "center" }}>

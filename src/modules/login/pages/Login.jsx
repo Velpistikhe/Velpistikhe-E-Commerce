@@ -1,9 +1,10 @@
-import { Grid, theme } from "antd";
+import { Button, Grid, theme } from "antd";
 import LoginForm from "../components/LoginForm";
-import { Link } from "react-router";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const screen = Grid.useBreakpoint();
   const [divStyle, setDivStyle] = useState({ width: 350 });
   const {
@@ -34,9 +35,16 @@ const Login = () => {
       }}
     >
       <h1>Login</h1>
-      <LoginForm />
+      <LoginForm navigate={navigate} />
       <p>
-        Belum Punya Akun? <Link to={"/register"}>Buat Akun</Link>
+        Belum Punya Akun?{" "}
+        <Button
+          color="primary"
+          variant="link"
+          onClick={() => navigate("/register")}
+        >
+          Daftar
+        </Button>
       </p>
     </div>
   );

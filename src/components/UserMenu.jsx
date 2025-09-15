@@ -12,10 +12,10 @@ import { logout } from "../modules/login/authSlice";
 import { useNotification } from "../context/NotificationContext";
 import useHandleApiError from "../hooks/useHandleApiError";
 
-const UserMenu = () => {
-  const { user } = useSelector((state) => state.auth);
+const UserMenu = ({ setOpenLogin }) => {
   const dispacth = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
   const { notify } = useNotification();
   const { handleApiError } = useHandleApiError();
   const {
@@ -25,8 +25,6 @@ const UserMenu = () => {
   const handleLogout = async () => {
     try {
       const message = await dispacth(logout()).unwrap();
-
-      navigate("/");
 
       notify({ type: "success", title: "Logout", message });
     } catch (error) {
@@ -59,7 +57,7 @@ const UserMenu = () => {
           key: "login",
           label: "Login",
           icon: <LoginOutlined />,
-          onClick: () => navigate("/login"),
+          onClick: () => setOpenLogin(true),
         },
       ];
 
@@ -86,7 +84,7 @@ const UserMenu = () => {
   );
 
   return (
-    <Popover content={content} trigger="click" placement="bottomRight">
+    <Popover content={user && content} trigger="click" placement="bottomRight">
       <Flex
         align="center"
         gap={10}
@@ -95,7 +93,11 @@ const UserMenu = () => {
           padding: "0 10px",
         }}
       >
-        <Avatar icon={<UserOutlined />} size="default" />
+        <Avatar
+          icon={<UserOutlined />}
+          size="default"
+          onClick={!user ? () => setOpenLogin(true) : null}
+        />
         {user?.nama && <span>{user?.nama}</span>}
       </Flex>
     </Popover>
